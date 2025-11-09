@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graou Challenge | Inscription</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* =======================================================
+           STYLES GÉNÉRAUX ET LAYOUT
+           ======================================================= */
+        
+        /* Variables de couleurs copiées de index.html */
+        :root {
+            --primary-color: #4CAF50; /* Vert vif pour les boutons/accents */
+            --secondary-color: #333;
+            --light-bg: #f4f7f9;
+            --dark-bg: #1e1e2f;
+            --text-light: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            color: var(--secondary-color);
+            background-color: #f4f4f9;
+            scroll-behavior: smooth;
+            /* CLÉ : Ajout pour décaler le contenu sous le header fixe */
+            padding-top: 80px; 
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        /* Boutons CTA (Appel à l'action) - Copié de index.html */
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            margin-top: 0; 
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            font-weight: 600;
+            border-radius: 50px;
+            transition: background-color 0.3s, transform 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .cta-button:hover {
+            background-color: #43a047;
+            transform: translateY(-2px);
+        }
+
+        /* =======================================================
+           HEADER & NAVIGATION (Copié de index.html)
+           ======================================================= */
+        header {
+            position: fixed;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: var(--text-light);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            top: 0; 
+            left: 0;
+        }
+        
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        nav a:not(.cta-button) {
+            margin-left: 25px;
+            font-weight: 600;
+            color: var(--secondary-color);
+            transition: color 0.3s;
+        }
+
+        nav a:not(.cta-button):hover {
+            color: var(--primary-color);
+        }
+        
+        /* Styles du sélecteur de langue dans la nav */
+        #language-selector {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif; 
+            font-size: 0.9em;
+            cursor: pointer;
+            background-color: var(--text-light);
+            color: var(--secondary-color);
+            margin-left: 25px; 
+            margin-right: 25px; 
+        }
+        
+        /* =======================================================
+           STYLES D'INSCRIPTION SPÉCIFIQUES 
+           ======================================================= */
+        
+        .main-title {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 0 5%;
+            font-size: 2.5em; 
+        }
+
+        /* Conteneur pour la mise en page Formulaire (Gauche) / Colonne Droite */
+        .top-section {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end; 
+            margin-bottom: 40px;
+        }
+
+        /* --- Conteneur du Formulaire (Gauche) --- */
+        .form-container {
+            width: 45%;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            /* NOTE : La hauteur fixe est conservée pour la mise en page spécifique, mais elle est très fragile */
+            height: 2850px; 
+        }
+
+        /* Ajustement de l'iFrame */
+        .form-container iframe {
+            display: block;
+            border: none;
+            overflow: hidden;
+            height: 2750px; 
+        }
+
+        /* --- Colonne Droite (Contient les autres éléments/outils) --- */
+        .right-column {
+            width: 45%;
+            display: flex;
+            flex-direction: column-reverse; 
+            justify-content: flex-end; 
+            gap: 20px; 
+            min-height: 100%; 
+        }
+        
+        /* Style pour l'ÉCART SUPPLÉMENTAIRE */
+        .right-column > .element-container:last-child {
+            margin-bottom: 1100px; /* Force l'espace en dessous du Logo pour qu'il soit en haut */
+        }
+
+        /* Styles génériques pour les conteneurs d'éléments de la colonne droite */
+        .element-container {
+            width: 100%;
+            background-color: white; 
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Styles spécifiques des éléments (Inchangés) */
+        #colorDisplay {
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+            border: 3px solid #ccc;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        #hexCode {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .static-image-container {
+            width: 100%;
+            height: 250px; 
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-container {
+            height: 600px; 
+        }
+        
+        .static-image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .slider-wrapper { margin: 0 auto; }
+        .slider-viewport { width: 100%; height: 200px; overflow: hidden; border-radius: 5px; margin-bottom: 10px; position: relative; }
+        .slider { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
+        .slider img { width: 100%; height: 100%; flex-shrink: 0; object-fit: cover; }
+        .slider-button { 
+            padding: 8px 15px; 
+            margin: 0 5px; 
+            cursor: pointer; 
+            border: none; 
+            background-color: #4CAF50; 
+            color: white; 
+            border-radius: 5px; 
+            font-size: 14px; 
+        }
+
+        /* =======================================================
+           FOOTER (AJOUTÉ ET STYLISÉ)
+           ======================================================= */
+        footer {
+            background-color: var(--dark-bg);
+            color: var(--light-bg);
+            text-align: center;
+            padding: 30px 5%;
+            font-size: 0.9em;
+            margin-top: auto; 
+        }
+
+        .social-links a {
+            /* COULEUR PAR DÉFAUT : BLANC CASSÉ */
+            color: var(--light-bg); 
+            margin: 0 10px;
+            font-size: 1.5em;
+            display: inline-flex;
+            align-items: center;
+            /* Ajout d'une transition pour un effet 'hover' doux */
+            transition: color 0.3s ease; 
+        }
+
+        .social-links a i {
+            margin-right: 5px; 
+        }
+
+        .social-links a:hover {
+            /* COULEUR AU SURVOL : VERT THÈME */
+            color: var(--primary-color); 
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+    <div class="logo" data-i18n="logo">Graou Challenge</div>
+    <nav>
+        <a href="index.html" data-i18n="nav_home">Accueil</a>
+        <a href="index.html#about" data-i18n="nav_about">L'événement</a>
+        <a href="Resultats.html" data-i18n="nav_results">Résultats</a>
+        <a href="Reglement.html" data-i18n="nav_rules">Règlement</a>
+        
+        <select id="language-selector" onchange="changeLanguage(this.value)">
+            <option value="fr">Français</option>
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+        </select>
+        
+        <a href="#" class="cta-button" data-i18n="nav_register">Inscription</a>
+    </nav>
+</header>
+    
+    <h1 class="main-title" data-i18n="page_title">Inscription pour l' Événement</h1>
+    
+    <div class="top-section">
+        
+        <div class="form-container">
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScwlRHXdZITYIjImvCjEuh-GdZ7KNOFZQxwAjlXj4VOIO7wvA/viewform?embedded=true" 
+                    width="100%" 
+                    height="2750" 
+                    frameborder="0" 
+                    marginheight="0" 
+                    marginwidth="0">
+                Chargement…
+            </iframe>
+        </div>
+        
+        <div class="right-column">
+            
+            <div class="element-container">
+                <h2 data-i18n="modifier_title">Modifier</h2>
+                <div class="static-image-container"> 
+                    <img src="http://www.image-heberg.fr/files/1762514102738512961.png" 
+                                alt="Image du Modifier">
+                </div>
+            </div>
+
+            <div class="element-container slider-wrapper">
+                <h2 data-i18n="layers_title">Layers</h2>
+                <div class="slider-viewport">
+                    <div class="slider" id="imageSlider">
+                    </div>
+                </div>
+                <button class="slider-button" onclick="prevSlide()" data-i18n="prev_slide">Précédent</button>
+                <button class="slider-button" onclick="nextSlide()" data-i18n="next_slide">Suivant</button>
+            </div>
+            
+            <div class="element-container">
+                <h2 data-i18n="color_picker_title">Sélecteur de Couleur 🎨</h2>
+                <input type="color" id="colorPicker" value="#4CAF50">
+                <div id="colorDisplay" style="background-color: #4CAF50;"></div>
+                <p id="hexCode">#4CAF50</p>
+            </div>
+
+            <div class="element-container">
+                <div class="static-image-container logo-container"> 
+                    <img src="http://www.image-heberg.fr/files/176252389572019905.png?text=Logo+Graou+Challenge" 
+                                alt="Logo Graou Challenge">
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+     <footer>
+        <div class="social-links">
+            <a href="https://www.twitch.tv/lionvibs" target="_blank" rel="noopener noreferrer" aria-label="Twitch">
+                <i class="fab fa-twitch"></i> Twitch
+            </a>
+            <a href="https://discord.gg/zGpmm5qJ" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+                <i class="fab fa-discord"></i> Discord
+            </a>
+            <a href="https://www.youtube.com/@LionViBS07" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                <i class="fab fa-youtube"></i> YouTube
+            </a>
+            <a href="https://www.tiktok.com/@lionvibs" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                <i class="fab fa-tiktok"></i> TikTok
+            </a>
+            <a href="https://www.instagram.com/lionvibs/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <i class="fab fa-instagram"></i> Instagram
+            </a>
+            <a href="https://streamelements.com/lionvibs/tip" target="_blank" rel="noopener noreferrer" aria-label="Donation">
+                <i class="fas fa-hand-holding-usd"></i> <span data-i18n="footer_donation_text">Donation</span>
+            </a>
+        </div>
+        <p data-i18n="footer_rights">&copy; 2025 Graou Challenge. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        /* --- 1. LOGIQUE DU SÉLECTEUR DE COULEUR --- */
+        const colorPicker = document.getElementById('colorPicker');
+        const colorDisplay = document.getElementById('colorDisplay');
+        const hexCode = document.getElementById('hexCode');
+
+        function updateColor(event) {
+            const newColor = event.target.value;
+            colorDisplay.style.backgroundColor = newColor;
+            hexCode.textContent = newColor;
+        }
+
+        colorPicker.addEventListener('input', updateColor);
+
+        /* --- 2. LOGIQUE DU DIAPORAMA ROTATIF --- */
+        const slider = document.getElementById('imageSlider');
+        let slideIndex = 0;
+        
+        // Chemins des photos du diaporama (Layers)
+        const photos = [
+            'http://www.image-heberg.fr/files/1762518260232428473.png?text=PHOTO+1',
+            'http://www.image-heberg.fr/files/17625187291065917950.png?text=PHOTO+2',
+            'http://www.image-heberg.fr/files/17625205711020117486.png?text=PHOTO+3',
+            'http://www.image-heberg.fr/files/17625206131979894226.png?text=PHOTO+4',
+            'http://www.image-heberg.fr/files/17625206402963615571.png?text=PHOTO+5',
+            'http://www.image-heberg.fr/files/17625206743570002519.png?text=PHOTO+6',
+            'http://www.image-heberg.fr/files/17625207484207920084.png?text=PHOTO+7',
+            'http://www.image-heberg.fr/files/1762520784744537220.png?text=PHOTO+8',
+            'http://www.image-heberg.fr/files/17625208153563413272.png?text=PHOTO+9'
+        ];
+
+        function loadSlides() {
+            slider.innerHTML = '';
+            photos.forEach(src => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = 'Diapositive';
+                slider.appendChild(img);
+            });
+            showSlide(slideIndex);
+            
+            // Re-appliquer les traductions après le chargement des slides pour les boutons
+            changeLanguage(document.getElementById('language-selector').value);
+        }
+
+        function showSlide(index) {
+            slideIndex = (index + photos.length) % photos.length;
+            const slideWidth = slider.parentElement.offsetWidth; 
+            const offset = -slideIndex * slideWidth; 
+            slider.style.transform = `translateX(${offset}px)`;
+        }
+
+        function nextSlide() {
+            showSlide(slideIndex + 1);
+        }
+
+        function prevSlide() {
+            showSlide(slideIndex - 1);
+        }
+
+        // Chargement initial et gestion du redimensionnement
+        window.onload = loadSlides;
+        window.addEventListener('resize', () => showSlide(slideIndex));
+
+        // --- 3. LOGIQUE DE TRADUCTION (STABILISÉE) ---
+      const translations = {
+            fr: {
+                // Traductions de la navigation
+                logo: "Graou Challenge",
+                nav_home: "Accueil",
+                nav_about: "L'événement",
+                nav_results: "Résultats",
+                nav_rules: "Règlement",
+                nav_register: "Inscription",
+                // Traductions du contenu de la page
+                page_title: "Inscription pour l' Événement",
+                modifier_title: "Modifier",
+                layers_title: "Layers",
+                color_picker_title: "Sélecteur de Couleur 🎨",
+                prev_slide: "Précédent",
+                next_slide: "Suivant",
+                // Traduction du pied de page
+                footer_donation: " Donation",
+                footer_rights: "© 2025 Graou Challenge. Tous droits réservés."
+            },
+            en: {
+                // Traductions de la navigation
+                logo: "Graou Challenge",
+                nav_home: "Home",
+                nav_about: "The Event",
+                nav_results: "Results",
+                nav_rules: "Rules",
+                nav_register: "Register",
+                // Traductions du contenu de la page
+                page_title: "Event Registration",
+                modifier_title: "Modifier", 
+                layers_title: "Layers",
+                color_picker_title: "Color Picker 🎨",
+                prev_slide: "Previous",
+                next_slide: "Next",
+                // Traduction du pied de page
+                footer_donation: " Donation",
+                footer_rights: "© 2025 Graou Challenge. All rights reserved."
+            },
+            de: {
+                // Traductions de la navigation
+                logo: "Graou Challenge",
+                nav_home: "Startseite",
+                nav_about: "Das Event",
+                nav_results: "Ergebnisse",
+                nav_rules: "Reglement",
+                nav_register: "Anmeldung",
+                // Traductions du contenu de la page
+                page_title: "Anmeldung für die Veranstaltung",
+                modifier_title: "Ändern",
+                layers_title: "Ebenen",
+                color_picker_title: "Farbauswahl 🎨",
+                prev_slide: "Zurück",
+                next_slide: "Weiter",
+                // Traduction du pied de page
+                footer_donation: " Spenden",
+                footer_rights: "© 2025 Graou Challenge. Alle Rechte vorbehalten."
+            }
+        };
+
+        function changeLanguage(lang) {
+            // CLÉ : Logique simplifiée pour utiliser textContent partout, ce qui est plus sûr.
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    // Pour le lien de donation, nous devons préserver l'icône, donc nous utilisons innerHTML
+                    if (key === 'footer_donation') {
+                         // On ne met à jour que le texte après l'icône (i.e. ' Donation')
+                         // La structure du lien est <i class="..."></i> TEXTE_TRADUIT
+                         // Pour simplifier et ne pas casser le code : On met juste le texte.
+                         // Le texte est ajouté après l'icône dans la nouvelle structure HTML
+                         element.innerHTML = '<i class="fas fa-hand-holding-usd"></i>' + translations[lang][key];
+                    } else {
+                        // Utilisation de textContent pour tous les autres éléments (titres, boutons, nav)
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+            
+            // Mettre à jour le texte de l'option sélectionnée dans le sélecteur
+            const selector = document.getElementById('language-selector');
+            if (selector) {
+                // S'assure que l'option sélectionnée correspond à la langue actuelle
+                selector.value = lang; 
+            }
+        }
+        
+        // Traduction initiale au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            changeLanguage('fr');
+        });
+        
+    </script>
+</body>
+</html>

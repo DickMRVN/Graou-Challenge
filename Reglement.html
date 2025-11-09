@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="rules_page_title">Graou Challenge | Règlement</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* =======================================================
+           STYLES GÉNÉRAUX & TYPOGRAPHIE
+           ======================================================= */
+        :root {
+            --primary-color: #4CAF50; /* Vert vif pour les boutons/accents */
+            --secondary-color: #333;
+            --light-bg: #f4f7f9;
+            --dark-bg: #1e1e2f;
+            --text-light: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--secondary-color);
+            background-color: var(--light-bg);
+            padding-bottom: 80px; /* Espace pour le footer */
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        /* Boutons CTA (Appel à l'action) */
+        .cta-button {
+            display: inline-block;
+            padding: 10px 25px; 
+            margin-top: 0; 
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            font-weight: 600;
+            border-radius: 50px;
+            transition: background-color 0.3s, transform 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+            margin-left: 25px; 
+        }
+
+        .cta-button:hover {
+            background-color: #43a047;
+            transform: translateY(-2px);
+        }
+
+        /* =======================================================
+           HEADER & NAVIGATION (CORRIGÉ ET FIXÉ)
+           ======================================================= */
+        header {
+            position: fixed;
+            top: 0; /* Assure qu'il est bien collé en haut */
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            padding: 15px 5%; 
+            background-color: var(--text-light); 
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            height: 75px; 
+        }
+        
+        /* Style pour le sélecteur de langue */
+        #language-selector {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9em;
+            cursor: pointer;
+            background-color: var(--text-light);
+            color: var(--secondary-color);
+            margin-left: 25px; 
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        
+        nav {
+            display: flex; 
+            align-items: center;
+        }
+        
+        nav a {
+            margin-left: 25px;
+            font-weight: 600;
+            color: var(--secondary-color);
+            transition: color 0.3s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--primary-color);
+        }
+        
+        /* =======================================================
+           STYLES CONTENU RÈGLEMENT (DÉCALAGE SOUS LE HEADER)
+           ======================================================= */
+        .reglement-container {
+            /* Marge supérieure pour que le contenu ne soit pas masqué par le header fixé */
+            margin-top: 100px; 
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Ajustement des marges après le décalage principal */
+        .reglement-container > h1 {
+            margin-top: 0;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 5px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+        
+        /* =======================================================
+           STYLES TABLEAUX DE POINTS
+           ======================================================= */
+        .points-table {
+            width: 100%;
+            max-width: 400px; 
+            margin: 20px auto;
+            border-collapse: collapse;
+            font-size: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden; 
+        }
+
+        .points-table th, .points-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .points-table thead th {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .points-table tbody tr:nth-child(even) {
+            background-color: var(--light-bg);
+        }
+
+        .points-table tbody tr:hover {
+            background-color: #e0e0e0;
+        }
+
+        .multiplier-table {
+            border: 2px solid #ff6347; 
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        /* --- STYLES FOOTER --- */
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: var(--dark-bg); 
+            color: var(--light-bg);
+            text-align: center;
+            padding: 30px 5%;
+            font-size: 0.9em;
+            z-index: 1000;
+            margin-top: auto; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .social-links a {
+            color: var(--light-bg); 
+            margin: 0 10px;
+            font-size: 1.5em;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.3s ease; 
+        }
+
+        .social-links a i {
+            margin-right: 5px; 
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color); 
+        }
+        
+        footer p {
+            margin-top: 15px;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <a href="#" class="logo" data-i18n="logo">Graou Challenge</a> 
+        <nav>
+            <a href="index.html" data-i18n="nav_home">Accueil</a>
+            <a href="index.html#about" data-i18n="nav_about">L'événement</a>
+            <a href="Resultats.html" data-i18n="nav_results">Résultats</a>
+            <a href="Reglement.html" class="active" data-i18n="nav_rules">Règlement</a> 
+            
+            <select id="language-selector" onchange="changeLanguage(this.value)">
+                <option value="fr">Français</option>
+                <option value="en">English</option>
+                <option value="de">Deutsch</option>
+            </select>
+            
+            <a href="Inscription.html" class="cta-button" data-i18n="nav_register">Inscription</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="reglement-container">
+            <h1 data-i18n="rules_title">Règlement Officiel du Graou Challenge</h1>
+            <p data-i18n="rules_intro">
+                Bienvenue au Graou Challenge ! Ce tournoi est basé sur le jeu **Marbles On Stream**. Pour assurer une compétition équitable, amusante et respectueuse, veuillez prendre connaissance des règles ci-dessous. En vous inscrivant, vous acceptez l'intégralité de ce règlement.
+            </p>
+
+            <section>
+                <h2 data-i18n="rules_section_1_title">1. Inscription et Composition</h2>
+                
+                <h3>Équipes</h3>
+                <ul>
+                    <li data-i18n="rules_team_composition">Chaque équipe doit être composée de **5 joueurs maximum**.</li>
+                    <li data-i18n="rules_team_name">**Nom d'équipe** : Les noms d'équipe ne doivent pas être offensants, diffamatoires, ou enfreindre les droits d'auteur.</li>
+                    <li data-i18n="rules_late_join">**Joueur temporaire** : Si une équipe n'est pas complète, un joueur peut la rejoindre le jour du Graou Challenge en tapant **`!join`** dans le chat Twitch. Ce joueur rejoindra alors une équipe aléatoire qui n'est pas complète.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2 data-i18n="rules_section_2_title">2. Personnalisation des Billes (Marbles On Stream)</h2>
+                <p data-i18n="rules_marble_customization_intro">
+                    La personnalisation de votre bille se fait directement via les options du jeu : **Couleur**, **Layer** (skin) et **Modifier** (forme).
+                </p>
+                <ul>
+                    <li data-i18n="rules_marble_required">**Éléments obligatoires** : Chaque bille doit être identifiable avec au minimum un **Layer** (skin) et un **Modifier** (forme).</li>
+                    <li data-i18n="rules_marble_color">**Couleur pour Affichage** : L'élément "Couleur" est principalement utilisé pour l'identification de l'équipe sur le classement et le tableau d'affichage officiel.</li>
+                    <li data-i18n="rules_marble_limits">**Limites techniques et Validation** :
+                        <ul>
+                            <li>Une liste des Modifiers et Layers actuellement disponibles est présente sur la feuille d’inscription.</li>
+                            <li>Vous pouvez faire une demande pour un autre élément, mais nous ne pouvons garantir qu'il vous sera fourni.</li>
+                            <li>Si toute votre équipe utilise le même Layer et Modifier, cela peut être validé par les organisateurs.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h2 data-i18n="rules_section_3_title">3. Format du Tournoi</h2>
+
+                <h3>Calendrier</h3>
+                <p data-i18n="rules_schedule">Les compétitions ont lieu en direct tous les **Mercredis à 20h00** (heure de Paris/CET) sur <a href="https://www.twitch.tv/lionvibs" target="_blank">[Lien Twitch : https://www.twitch.tv/lionvibs]</a>.</p>
+
+                <h3>Système de points standard</h3>
+                <p data-i18n="rules_points_standard_intro">Les points sont attribués à la fin de chaque épreuve selon le barème suivant :</p>
+
+                <table class="points-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="table_header_place">Place</th>
+                            <th data-i18n="table_header_points">Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1<sup data-i18n="st">er</sup></td><td>20 points</td></tr>
+                        <tr><td>2<sup data-i18n="nd">ème</sup></td><td>17 points</td></tr>
+                        <tr><td>3<sup data-i18n="rd">ème</sup></td><td>14 points</td></tr>
+                        <tr><td>4<sup data-i18n="th">ème</sup></td><td>12 points</td></tr>
+                        <tr><td>5<sup data-i18n="th">ème</sup></td><td>10 points</td></tr>
+                        <tr><td>6<sup data-i18n="th">ème</sup></td><td>8 points</td></tr>
+                        <tr><td>7<sup data-i18n="th">ème</sup></td><td>6 points</td></tr>
+                        <tr><td>8<sup data-i18n="th">ème</sup></td><td>4 points</td></tr>
+                        <tr><td>9<sup data-i18n="th">ème</sup></td><td>2 points</td></tr>
+                        <tr><td>10<sup data-i18n="th">ème</sup></td><td>1 point</td></tr>
+                    </tbody>
+                </table>
+                
+                <p>
+                    <li data-i18n="rules_bonus_race">**Course Bonus** : Certaines courses vous permettront d’acquérir un bonus de **5 points**.</li>
+                    <li data-i18n="rules_in_game_purchases">**Achats en jeu** : Sur les courses, vous avez la possibilité d’utiliser les Plutos ou des bits (50 bits = 1 Pluto).</li>
+                </p>
+
+                <h3>La Dernière Course (Multiplicateur x1,5)</h3>
+                <p data-i18n="rules_last_race_intro">Lors de la dernière course de l'épisode, les points sont **multipliés par 1,5** :</p>
+                
+                <table class="points-table multiplier-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="table_header_place">Place</th>
+                            <th data-i18n="table_header_points_multiplied">Points Multipliés (x1,5)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1<sup data-i18n="st">er</sup></td><td>30 points</td></tr>
+                        <tr><td>2<sup data-i18n="nd">ème</sup></td><td>26 points</td></tr>
+                        <tr><td>3<sup data-i18n="rd">ème</sup></td><td>21 points</td></tr>
+                        <tr><td>4<sup data-i18n="th">ème</sup></td><td>18 points</td></tr>
+                        <tr><td>5<sup data-i18n="th">ème</sup></td><td>15 points</td></tr>
+                        <tr><td>6<sup data-i18n="th">ème</sup></td><td>12 points</td></tr>
+                        <tr><td>7<sup data-i18n="th">ème</sup></td><td>9 points</td></tr>
+                        <tr><td>8<sup data-i18n="th">ème</sup></td><td>6 points</td></tr>
+                        <tr><td>9<sup data-i18n="th">ème</sup></td><td>3 points</td></tr>
+                        <tr><td>10<sup data-i18n="th">ème</sup></td><td>2 points</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Le Voleur de Points (Rafiki)</h3>
+                <p data-i18n="rules_rafiki_system">
+                    Le streamer intègre un voleur de points nommé **"Rafiki"**. En début d’épisode, une roue est tournée pour déterminer le pourcentage de points que **Rafiki donnera à la dernière équipe** du classement général de l'épisode précédent. Ces points sont ajoutés au score de la dernière équipe pour l'épisode en cours.
+                </p>
+
+            </section>
+
+            <section>
+                <h2 data-i18n="rules_section_4_title">4. Conduite et Éthique</h2>
+                <ul>
+                    <li data-i18n="rules_fairplay">**Fair-play** : Le **respect** des autres joueurs et des organisateurs est obligatoire.</li>
+                    <li data-i18n="rules_sanction">**Sanction** : Tout manquement à cette règle entraînera le **retrait de la compétition** de l'équipe ou du joueur concerné.</li>
+                    <li data-i18n="rules_moderation">**Modération** : Les décisions des organisateurs concernant l'application de ce règlement sont **finales et sans appel**.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2 data-i18n="rules_section_5_title">5. Résultats et Classement</h2>
+                <ul>
+                    <li data-i18n="rules_display">**Affichage** : Les résultats officiels sont mis à jour après chaque compétition et affichés sur la page <a href="Resultats.html">[Résultats]</a> ou directement sur le stream.</li>
+                    <li data-i18n="rules_rewards">**Récompenses** : Les récompenses (MM, TC ou mini-jeu) sont distribuées au **meilleur joueur de chaque épisode** selon le classement (leaderboard).</li>
+                    <li data-i18n="rules_contest">**Contestation** : Toute contestation de résultat doit être soumise dans les **24 heures** suivant la fin de l'épisode concerné.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2 data-i18n="rules_section_6_title">6. Modification (Composition d'Équipe)</h2>
+                <ul>
+                    <li data-i18n="rules_pseudo_change">**Changement de pseudo** : Si vous ou un membre de votre équipe change de pseudo, veuillez nous faire remonter l’information pour que nous procédions au changement. **Si le changement n’est pas fait, les points acquis par ce joueur ne seront pas comptabilisés pour les épisodes concernés.**</li>
+                    <li data-i18n="rules_player_withdrawal">**Retrait d’un joueur** : Vous pouvez à tout moment nous soumettre une demande pour retirer un joueur de votre équipe pour motif d'inactivité.</li>
+                </ul>
+            </section>
+
+            <p class="contact-info" data-i18n="rules_contact_info">
+                Pour toute question ou clarification sur ce règlement, veuillez contacter l'équipe d'organisation via <a href="https://discord.gg/zGpmm5qJ" target="_blank">[Discord]</a>.
+            </p>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://www.twitch.tv/lionvibs" target="_blank" rel="noopener noreferrer" aria-label="Twitch">
+                <i class="fab fa-twitch"></i> Twitch
+            </a>
+            <a href="https://discord.gg/zGpmm5qJ" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+                <i class="fab fa-discord"></i> Discord
+            </a>
+            <a href="https://www.youtube.com/@LionViBS07" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                <i class="fab fa-youtube"></i> YouTube
+            </a>
+            <a href="https://www.tiktok.com/@lionvibs" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                <i class="fab fa-tiktok"></i> TikTok
+            </a>
+            <a href="https://www.instagram.com/lionvibs/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <i class="fab fa-instagram"></i> Instagram
+            </a>
+            <a href="https://streamelements.com/lionvibs/tip" target="_blank" rel="noopener noreferrer" aria-label="Donation">
+                <i class="fas fa-hand-holding-usd"></i> <span data-i18n="footer_donation_text">Donation</span>
+            </a>
+        </div>
+        <p data-i18n="footer_rights">&copy; 2025 Graou Challenge. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        const translations = {
+            fr: {
+                // NAVIGATION (Adapté de index.html)
+                logo: "Graou Challenge",
+                nav_home: "Accueil",
+                nav_about: "L'événement",
+                nav_results: "Résultats",
+                nav_rules: "Règlement", 
+                nav_register: "Inscription",
+                
+                // TITRES RÈGLEMENT
+                rules_page_title: "Graou Challenge | Règlement",
+                rules_title: "Règlement Officiel du Graou Challenge",
+                
+                // SECTIONS
+                rules_section_1_title: "1. Inscription et Composition",
+                rules_section_2_title: "2. Personnalisation des Billes (Marbles On Stream)",
+                rules_section_3_title: "3. Format du Tournoi",
+                rules_section_4_title: "4. Conduite et Éthique",
+                rules_section_5_title: "5. Résultats et Classement",
+                rules_section_6_title: "6. Modification (Composition d'Équipe)",
+                
+                // TABLEAUX
+                table_header_place: "Place",
+                table_header_points: "Points",
+                table_header_points_multiplied: "Points Multipliés (x1,5)",
+                st: "er", 
+                nd: "ème", 
+                rd: "ème", 
+                th: "ème", 
+                
+                // TEXTES DIVERS RÈGLEMENT
+                rules_intro: "Bienvenue au Graou Challenge ! Ce tournoi est basé sur le jeu **Marbles On Stream**. Pour assurer une compétition équitable, amusante et respectueuse, veuillez prendre connaissance des règles ci-dessous. En vous inscrivant, vous acceptez l'intégralité de ce règlement.",
+                rules_team_composition: "Chaque équipe doit être composée de **5 joueurs maximum**.",
+                rules_team_name: "**Nom d'équipe** : Les noms d'équipe ne doivent pas être offensants, diffamatoires, ou enfreindre les droits d'auteur.",
+                // MISE À JOUR ICI : Suppression de (Option "Late Join")
+                rules_late_join: "**Joueur temporaire** : Si une équipe n'est pas complète, un joueur peut la rejoindre le jour du Graou Challenge en tapant **`!join`** dans le chat Twitch. Ce joueur rejoindra alors une équipe aléatoire qui n'est pas complète.",
+                rules_marble_customization_intro: "La personnalisation de votre bille se fait directement via les options du jeu : **Couleur**, **Layer** (skin) et **Modifier** (forme).",
+                rules_marble_required: "**Éléments obligatoires** : Chaque bille doit être identifiable avec au minimum un **Layer** (skin) et un **Modifier** (forme).",
+                rules_marble_color: "**Couleur pour Affichage** : L'élément \"Couleur\" est principalement utilisé pour l'identification de l'équipe sur le classement et le tableau d'affichage officiel.",
+                rules_marble_limits: "**Limites techniques et Validation** :<ul><li>Une liste des Modifiers et Layers actuellement disponibles est présente sur la feuille d’inscription.</li><li>Vous pouvez faire une demande pour un autre élément, mais nous ne pouvons garantir qu'il vous sera fourni.</li><li>Si toute votre équipe utilise le même Layer et Modifier, cela peut être validé par les organisateurs.</li></ul>",
+                rules_schedule: "Les compétitions ont lieu en direct tous les **Mercredis à 20h00** (heure de Paris/CET) sur <a href=\"https://www.twitch.tv/lionvibs\" target=\"_blank\">[Lien Twitch : https://www.twitch.tv/lionvibs]</a>.",
+                rules_points_standard_intro: "Les points sont attribués à la fin de chaque épreuve selon le barème suivant :",
+                rules_bonus_race: "**Course Bonus** : Certaines courses vous permettront d’acquérir un bonus de **5 points**.",
+                rules_in_game_purchases: "**Achats en jeu** : Sur les courses, vous avez la possibilité d’utiliser les Plutos ou des bits (50 bits = 1 Pluto).",
+                rules_last_race_intro: "Lors de la dernière course de l'épisode, les points sont **multipliés par 1,5** :",
+                rules_rafiki_system: "Le streamer intègre un voleur de points nommé **\"Rafiki\"**. En début d’épisode, une roue est tournée pour déterminer le pourcentage de points que **Rafiki donnera à la dernière équipe** du classement général de l'épisode précédent. Ces points sont ajoutés au score de la dernière équipe pour l'épisode en cours.",
+                rules_fairplay: "**Fair-play** : Le **respect** des autres joueurs et des organisateurs est obligatoire.",
+                rules_sanction: "**Sanction** : Tout manquement à cette règle entraînera le **retrait de la compétition** de l'équipe ou du joueur concerné.",
+                rules_moderation: "**Modération** : Les décisions des organisateurs concernant l'application de ce règlement sont **finales et sans appel**.",
+                rules_display: "**Affichage** : Les résultats officiels sont mis à jour après chaque compétition et affichés sur la page <a href=\"Resultats.html\">[Résultats]</a> ou directement sur le stream.",
+                rules_rewards: "**Récompenses** : Les récompenses (MM, TC ou mini-jeu) sont distribuées au **meilleur joueur de chaque épisode** selon le classement (leaderboard).",
+                rules_contest: "**Contestation** : Toute contestation de résultat doit être soumise dans les **24 heures** suivant la fin de l'épisode concerné.",
+                rules_pseudo_change: "**Changement de pseudo** : Si vous ou un membre de votre équipe change de pseudo, veuillez nous faire remonter l’information pour que nous procédions au changement. **Si le changement n’est pas fait, les points acquis par ce joueur ne seront pas comptabilisés pour les épisodes concernés.**",
+                rules_player_withdrawal: "**Retrait d’un joueur** : Vous pouvez à tout moment nous soumettre une demande pour retirer un joueur de votre équipe pour motif d'inactivité.",
+                rules_contact_info: "Pour toute question ou clarification sur ce règlement, veuillez contacter l'équipe d'organisation via <a href=\"https://discord.gg/zGpmm5qJ\" target=\"_blank\">[Discord]</a>.",
+                footer_donation_text: "Donation",
+                footer_rights: "© 2025 Graou Challenge. Tous droits réservés."
+            },
+            en: {
+                // NAVIGATION
+                logo: "Graou Challenge",
+                nav_home: "Home",
+                nav_about: "The Event",
+                nav_results: "Results", 
+                nav_rules: "Rules", 
+                nav_register: "Register",
+
+                // TITRES RÈGLEMENT
+                rules_page_title: "Graou Challenge | Rules",
+                rules_title: "Official Graou Challenge Rules",
+                
+                // SECTIONS
+                rules_section_1_title: "1. Registration and Composition",
+                rules_section_2_title: "2. Marble Customization (Marbles On Stream)",
+                rules_section_3_title: "3. Tournament Format",
+                rules_section_4_title: "4. Conduct and Ethics",
+                rules_section_5_title: "5. Results and Standings",
+                rules_section_6_title: "6. Modification (Team Composition)",
+
+                // TABLEAUX
+                table_header_place: "Place",
+                table_header_points: "Points",
+                table_header_points_multiplied: "Multiplied Points (x1.5)",
+                st: "st", 
+                nd: "nd", 
+                rd: "rd", 
+                th: "th", 
+
+                // TEXTES DIVERS RÈGLEMENT
+                rules_intro: "Welcome to the Graou Challenge! This tournament is based on the game **Marbles On Stream**. To ensure fair, fun, and respectful competition, please review the rules below. By registering, you accept these rules in their entirety.",
+                rules_team_composition: "Each team must consist of a **maximum of 5 players**.",
+                rules_team_name: "**Team Name** : Team names must not be offensive, defamatory, or infringe copyright.",
+                // MISE À JOUR ICI : Suppression de ("Late Join" Option)
+                rules_late_join: "**Temporary Player** : If a team is not complete, a player can join on the day of the Graou Challenge by typing **`!join`** in the Twitch chat. This player will then join a random team that is not complete.",
+                rules_marble_customization_intro: "Your marble is customized directly via the game options: **Color**, **Layer** (skin) and **Modifier** (shape).",
+                rules_marble_required: "**Required Elements** : Each marble must be identifiable with at least one **Layer** (skin) and one **Modifier** (shape).",
+                rules_marble_color: "**Color for Display** : The \"Color\" element is primarily used for team identification on the official standings and scoreboard.",
+                rules_marble_limits: "**Technical Limits and Validation** :<ul><li>A list of currently available Modifiers and Layers is present on the registration sheet.</li><li>You can request another element, but we cannot guarantee it will be provided to you.</li><li>If your entire team uses the same Layer and Modifier, this may be validated by the organizers.</li></ul>",
+                rules_schedule: "Competitions take place live every **Wednesday at 8:00 PM** (Paris/CET time) on <a href=\"https://www.twitch.tv/lionvibs\" target=\"_blank\">[Twitch Link: https://www.twitch.tv/lionvibs]</a>.",
+                rules_points_standard_intro: "Points are awarded at the end of each event according to the following scale:",
+                rules_bonus_race: "**Bonus Race** : Some races will allow you to gain a **5 point bonus**.",
+                rules_in_game_purchases: "**In-game Purchases** : In races, you have the option to use Plutos or bits (50 bits = 1 Pluto).",
+                rules_last_race_intro: "In the last race of the episode, points are **multiplied by 1.5** :",
+                rules_rafiki_system: "The streamer integrates a point thief named **\"Rafiki\"**. At the start of the episode, a wheel is spun to determine the percentage of points that **Rafiki will give to the last place team** in the overall standings from the previous episode. These points are added to the last team's score for the current episode.",
+                rules_fairplay: "**Fair Play** : **Respect** for other players and organizers is mandatory.",
+                rules_sanction: "**Sanction** : Any breach of this rule will result in the **removal from the competition** of the team or player concerned.",
+                rules_moderation: "**Moderation** : The organizers' decisions regarding the application of these rules are **final and non-appealable**.",
+                rules_display: "**Display** : Official results are updated after each competition and displayed on the <a href=\"Resultats.html\">[Results]</a> page or directly on the stream.",
+                rules_rewards: "**Rewards** : Rewards (MM, TC or mini-game) are distributed to the **best player of each episode** according to the standings (leaderboard).",
+                rules_contest: "**Contest** : Any contestation of results must be submitted within **24 hours** after the end of the episode concerned.",
+                rules_pseudo_change: "**Nickname Change** : If you or a member of your team changes nickname, please inform us so that we can make the change. **If the change is not made, the points acquired by this player will not be counted for the episodes concerned.**",
+                rules_player_withdrawal: "**Player Withdrawal** : You can submit a request at any time to remove a player from your team due to inactivity.",
+                rules_contact_info: "For any questions or clarification on these rules, please contact the organizing team via <a href=\"https://discord.gg/zGpmm5qJ\" target=\"_blank\">[Discord]</a>.",
+                footer_donation_text: "Donation",
+                footer_rights: "© 2025 Graou Challenge. All rights reserved."
+            },
+            de: {
+                // NAVIGATION
+                logo: "Graou Challenge",
+                nav_home: "Startseite",
+                nav_about: "Das Event",
+                nav_results: "Ergebnisse", 
+                nav_rules: "Reglement", 
+                nav_register: "Anmeldung",
+
+                // TITRES RÈGLEMENT
+                rules_page_title: "Graou Challenge | Reglement",
+                rules_title: "Offizielles Graou Challenge Reglement",
+                
+                // SECTIONS
+                rules_section_1_title: "1. Anmeldung und Zusammensetzung",
+                rules_section_2_title: "2. Personalisierung der Murmeln (Marbles On Stream)",
+                rules_section_3_title: "3. Turnierformat",
+                rules_section_4_title: "4. Verhalten und Ethik",
+                rules_section_5_title: "5. Ergebnisse und Rangliste",
+                rules_section_6_title: "6. Modifikation (Teamzusammensetzung)",
+
+                // TABLEAUX
+                table_header_place: "Platz",
+                table_header_points: "Punkte",
+                table_header_points_multiplied: "Multiplizierte Punkte (x1,5)",
+                st: "ter", 
+                nd: "ter", 
+                rd: "ter", 
+                th: "ter", 
+
+                // TEXTES DIVERS RÈGLEMENT
+                rules_intro: "Willkommen zur Graou Challenge! Dieses Turnier basiert auf dem Spiel **Marbles On Stream**. Um einen fairen, unterhaltsamen und respektvollen Wettbewerb zu gewährleisten, lesen Sie bitte die folgenden Regeln. Mit Ihrer Anmeldung akzeptieren Sie diese Regeln in vollem Umfang.",
+                rules_team_composition: "Jedes Team darf aus maximal **5 Spielern** bestehen.",
+                rules_team_name: "**Teamname** : Teamnamen dürfen nicht beleidigend, verleumderisch sein oder Urheberrechte verletzen.",
+                // MISE À JOUR ICI : Suppression de ("Late Join" Option)
+                rules_late_join: "**Temporärer Spieler** : Wenn ein Team nicht vollständig ist, kann ein Spieler am Tag der Graou Challenge beitreten, indem er **`!join`** im Twitch-Chat eingibt. Dieser Spieler tritt dann einem zufälligen, nicht vollständigen Team bei.",
+                rules_marble_customization_intro: "Ihre Murmel wird direkt über die Spieloptionen angepasst: **Farbe**, **Layer** (Skin) und **Modifier** (Form).",
+                rules_marble_required: "**Obligatorische Elemente** : Jede Murmel muss mit mindestens einem **Layer** (Skin) und einem **Modifier** (Form) identifizierbar sein.",
+                rules_marble_color: "**Farbe für die Anzeige** : Das Element \"Couleur\" est principalement utilisé pour l'identification de l'équipe sur le classement et le tableau d'affichage officiel.",
+                rules_marble_limits: "**Technische Einschränkungen und Validierung** :<ul><li>Eine Liste der aktuell verfügbaren Modifikatoren und Layer ist auf dem Anmeldeformular verfügbar.</li><li>Sie können ein anderes Element anfordern, aber wir können nicht garantieren, dass es Ihnen zur Verfügung gestellt wird.</li><li>Si toute votre équipe utilise le même Layer et Modifier, cela peut être validé par les organisateurs.</li></ul>",
+                rules_schedule: "Die Wettbewerbe finden jeden **Mittwoch um 20:00 Uhr** (Pariser/MEZ-Zeit) live auf <a href=\"https://www.twitch.tv/lionvibs\" target=\"_blank\">[Twitch-Link: https://www.twitch.tv/lionvibs]</a> statt.",
+                rules_points_standard_intro: "Punkte werden am Ende jeder Veranstaltung nach folgendem Schema vergeben:",
+                rules_bonus_race: "**Bonusrennen** : Einige Rennen ermöglichen es Ihnen, einen Bonus von **5 Punkten** zu erhalten.",
+                rules_in_game_purchases: "**Käufe im Spiel** : In Rennen haben Sie die Option, Plutos ou Bits (50 Bits = 1 Pluto) zu verwenden.",
+                rules_last_race_intro: "Im letzten Rennen der Episode werden die Punkte **mit 1,5 multipliziert** :",
+                rules_rafiki_system: "Der Streamer integriert einen Punktedieb namens **\"Rafiki\"**. Zu Beginn der Episode wird ein Rad gedreht, um den Prozentsatz der Punkte zu bestimmen, den **Rafiki an das letztplatzierte Team** der Gesamtwertung der vorherigen Episode gibt. Ces points sont ajoutés au score de la dernière équipe pour l'épisode en cours.",
+                rules_fairplay: "**Fair Play** : **Respect** vor anderen Spielern und Organisatoren ist obligatorisch.",
+                rules_sanction: "**Sanktion** : Jeder Verstoß gegen diese Regel führt zum **Ausschluss vom Wettbewerb** des betroffenen Teams oder Spielers.",
+                rules_moderation: "**Modération** : Die Entscheidungen der Organisatoren bezüglich der Anwendung dieser Regeln sind **endgültig und nicht anfechtbar**.",
+                rules_display: "**Anzeige** : Offizielle Ergebnisse werden nach jedem Wettbewerb aktualisiert und auf der Seite <a href=\"Resultats.html\">[Ergebnisse]</a> ou directement sur le stream.",
+                rules_rewards: "**Belohnungen** : Belohnungen (MM, TC oder Minispiel) werden an den **besten Spieler jeder Episode** gemäß der Rangliste (Leaderboard) verteilt.",
+                rules_contest: "**Anfechtung** : Jede Anfechtung von Ergebnissen muss innerhalb von **24 Stunden** nach Ende der betreffenden Episode eingereicht werden.",
+                rules_pseudo_change: "**Nickname-Änderung** : Wenn Sie ou ein Mitglied Ihres Teams den Nicknamen ändern, teilen Sie uns dies bitte mit, damit wir die Änderung vornehmen können. **Wenn die Änderung nicht vorgenommen wird, werden die von diesem Spieler erworbenen Punkte für die betroffenen Episoden nicht gezählt.**",
+                rules_player_withdrawal: "**Spielerabzug** : Sie können jederzeit einen Antrag stellen, einen Spieler wegen Inaktivität aus Ihrem Team zu entfernen.",
+                rules_contact_info: "Für Fragen oder Klarstellungen zu diesem Reglement wenden Sie sich bitte über <a href=\"https://discord.gg/zGpmm5qJ\" target=\"_blank\">[Discord]</a> an das Organisationsteam.",
+                footer_donation_text: "Spenden",
+                footer_rights: "© 2025 Graou Challenge. Alle Rechte vorbehalten."
+            }
+        };
+
+        // --- FONCTION DE TRADUCTION ---
+        function changeLanguage(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    let translatedText = translations[lang][key];
+
+                    // 1. CONVERSION DES **MOTS** EN GRAS <strong>MOTS</strong>
+                    translatedText = translatedText.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+
+                    // 2. Pour les liens de navigation et boutons
+                    if (element.classList.contains('cta-button') || element.getAttribute('data-i18n').startsWith('nav_')) {
+                         element.textContent = translatedText.replace(/<[^>]*>/g, '');
+                    }
+                    // 3. Pour les exposants (er, ème, st, nd, etc.)
+                    else if (element.tagName === 'SUP') {
+                        element.textContent = translatedText;
+                    } 
+                    // 4. Pour le reste (contenu du règlement, titres, etc.)
+                    else {
+                        element.innerHTML = translatedText;
+                    }
+                }
+            });
+            
+            // Met à jour le titre de la page séparément
+            const titleElement = document.querySelector('title');
+            const langKey = document.getElementById('language-selector').value;
+            if (titleElement && translations[langKey]['rules_page_title']) {
+                titleElement.textContent = translations[langKey]['rules_page_title'];
+            }
+
+            // Met à jour la langue de la balise HTML
+            document.documentElement.lang = lang;
+        }
+
+        // Traduction au chargement de la page (par défaut en français)
+        document.addEventListener('DOMContentLoaded', () => {
+            const selector = document.getElementById('language-selector');
+            const browserLang = navigator.language.split('-')[0];
+            const initialLang = translations[browserLang] ? browserLang : 'fr';
+            
+            if(selector) selector.value = initialLang;
+            changeLanguage(initialLang);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graou Challenge | Accueil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* =======================================================
+           STYLES GÉNÉRAUX & TYPOGRAPHIE
+           ======================================================= */
+        :root {
+            --primary-color: #4CAF50; /* Vert vif pour les boutons/accents */
+            --secondary-color: #333;
+            --light-bg: #f4f7f9;
+            --dark-bg: #1e1e2f;
+            --text-light: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--secondary-color);
+            background-color: var(--light-bg);
+            scroll-behavior: smooth;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        /* Boutons CTA (Appel à l'action) */
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            margin-top: 20px;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            font-weight: 600;
+            border-radius: 50px;
+            transition: background-color 0.3s, transform 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .cta-button:hover {
+            background-color: #43a047;
+            transform: translateY(-2px);
+        }
+
+        /* =======================================================
+           HEADER & NAVIGATION
+           ======================================================= */
+        header {
+            position: fixed;
+            width: 100%;
+            display: flex;
+            justify-content: space-between; /* Assure l'espace entre le logo et la nav */
+            align-items: center;
+            padding: 15px 5%;
+            background-color: var(--text-light);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+        }
+        
+        /* Style pour le sélecteur de langue - Alignement avec la navigation */
+        #language-selector {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9em;
+            cursor: pointer;
+            background-color: var(--text-light);
+            color: var(--secondary-color);
+            margin-left: 25px; 
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+        
+        nav {
+            display: flex; /* Permet d'aligner le sélecteur avec les liens */
+            align-items: center;
+        }
+        
+        nav a {
+            margin-left: 25px;
+            font-weight: 600;
+            color: var(--secondary-color);
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        
+        /* Le bouton d'inscription doit être correctement aligné verticalement */
+        nav .cta-button {
+            margin-top: 0; 
+        }
+
+        /* =======================================================
+           HERO SECTION (La bannière principale)
+           ======================================================= */
+        #hero {
+            height: 100vh;
+            text-align: center;
+            
+            /* FLEXBOX : Empile, centre horizontalement et place en haut */
+            display: flex;
+            flex-direction: column; 
+            justify-content: flex-start; /* NOUVEAU: Aligne les éléments en haut */
+            align-items: center; /* Centre horizontalement tous les enfants */
+            
+            /* Background et padding de dégagement */
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('http://www.image-heberg.fr/files/17625969031396475401.png?text=Votre+Image+de+Fond+Jeu');
+            background-size: cover;
+            background-position: center;
+            color: var(--text-light);
+            padding-top: 80px; /* Espace pour le header fixe */
+            padding-bottom: 20px; /* Marge en bas de l'écran */
+            box-sizing: border-box; /* Assure que le padding est inclus dans 100vh */
+        }
+        
+        /* Conteneur du logo (Poussé en haut) */
+        .hero-logo-container {
+            width: 100%;
+            padding: 0 20px;
+            /* Marge sous le logo pour séparer du texte centré */
+            margin-bottom: 30px; 
+        }
+
+        /* Style de l'image (logo) */
+        .hero-logo {
+            max-width: 90%; 
+            height: auto;
+            display: block; 
+            margin: 0 auto; /* Centre l'image horizontalement */
+        }
+        
+        /* Conteneur principal du texte et du bouton (Centre Verticalement dans l'espace restant) */
+        .hero-main-content {
+            /* Prend tout l'espace disponible sous le logo */
+            flex-grow: 1; 
+            
+            /* Centre le texte et le bouton verticalement à l'intérieur de cet espace */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+
+            max-width: 800px; /* Conserve la largeur max du texte */
+            padding: 0 20px; /* Conserve le padding latéral */
+        }
+
+        /* Styles de texte */
+        .hero-main-content h1 {
+            font-size: 4em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-main-content p {
+            font-size: 1.2em;
+            font-weight: 300;
+            margin-bottom: 30px;
+        }
+        
+        /* =======================================================
+           SECTION CONTENU
+           ======================================================= */
+        .section {
+            /* PADDING AUGMENTÉ pour aérer */
+            padding: 120px 5%;
+            text-align: center;
+        }
+        
+        /* Marge de défilement pour les liens d'ancrage sous le header */
+        #about {
+            scroll-margin-top: 100px;
+        } 
+
+        .section h2 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+
+        .section p {
+            max-width: 800px;
+            /* MARGE INFÉRIEURE AUGMENTÉE pour espacer du bloc .features */
+            margin: 0 auto 60px auto;
+            color: #666;
+        }
+        
+        .features {
+            display: flex;
+            justify-content: space-around;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-box {
+            flex: 1;
+            padding: 30px;
+            background-color: var(--text-light);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            text-align: left;
+        }
+
+        .feature-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        /* =======================================================
+           FOOTER
+           ======================================================= */
+        footer {
+            background-color: var(--dark-bg);
+            color: var(--light-bg);
+            text-align: center;
+            padding: 30px 5%;
+            font-size: 0.9em;
+            margin-top: auto; 
+        }
+
+        .social-links a {
+            /* COULEUR PAR DÉFAUT : BLANC CASSÉ */
+            color: var(--light-bg); 
+            margin: 0 10px;
+            font-size: 1.5em;
+            display: inline-flex;
+            align-items: center;
+            /* Ajout d'une transition pour un effet 'hover' doux */
+            transition: color 0.3s ease; 
+        }
+
+        .social-links a i {
+            margin-right: 5px; 
+        }
+
+        .social-links a:hover {
+            /* COULEUR AU SURVOL : VERT THÈME */
+            color: var(--primary-color); 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+    <div class="logo" data-i18n="logo">Graou Challenge</div>
+    <nav>
+        <a href="#" data-i18n="nav_home">Accueil</a>
+        <a href="index.html#about" data-i18n="nav_about">L'événement</a>
+        <a href="Resultats.html" data-i18n="nav_results">Résultats</a>
+        <a href="Reglement.html" data-i18n="nav_rules">Règlement</a>
+        
+        <select id="language-selector" onchange="changeLanguage(this.value)">
+            <option value="fr">Français</option>
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+        </select>
+        
+        <a href="Inscription.html" class="cta-button" data-i18n="nav_register">Inscription</a>
+    </nav>
+</header>
+
+    <section id="hero">
+        <div class="hero-logo-container">
+            <img src="http://www.image-heberg.fr/files/1762537943922686475.png" alt="Logo Graou Challenge" class="hero-logo">
+        </div>
+
+        <div class="hero-main-content">
+            <h1 data-i18n="hero_title">Prêt à Dominer la Piste ?</h1>
+            <p data-i18n="hero_subtitle">Rejoignez la compétition ultime de l'année. Inscrivez votre équipe dès maintenant et montrez qui est le roi de la bille !</p>
+            <a href="Inscription.html" class="cta-button" data-i18n="cta_register">Je m'inscris !</a>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2 data-i18n="about_title">L'Événement, en bref</h2>
+        <p data-i18n="about_subtitle">Le Graou Challenge est l'événement communautaire qui réunit stratégie, personnalisation et vitesse. Ne manquez pas la compétition en direct tous les mercredis à 20h00 !<br><br>Voici ce qui vous attend sur la piste :</p>
+        
+        <div class="features">
+            <div class="feature-box">
+                <h3 data-i18n="feat1_title">🏆 Compétition Élite</h3>
+                <p data-i18n="feat1_text">Affrontez les meilleures équipes pour la gloire et tentez de remporter la pyrogravure exclusive de la saison. Gagnez même des MM (Marbles Money) ou des TC (Tournament Coins) si vous êtes le meilleur de l'épisode ! Seuls les plus rapides et les plus stratégiques gagneront.</p>
+            </div>
+            <div class="feature-box">
+                <h3 data-i18n="feat2_title">🛠️ Personnalisation Totale</h3>
+                <p data-i18n="feat2_text">Couleur, Layers, Modifier : customisez chaque aspect de votre bille pour un avantage unique sur le circuit.</p>
+            </div>
+            <div class="feature-box">
+                <h3 data-i18n="feat3_title">🌐 Communauté Active</h3>
+                <p data-i18n="feat3_text">Rejoignez notre Discord pour les annonces, les discussions stratégiques et rencontrer vos futurs rivaux et alliés.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://www.twitch.tv/lionvibs" target="_blank" rel="noopener noreferrer" aria-label="Twitch">
+                <i class="fab fa-twitch"></i> Twitch
+            </a>
+            <a href="https://discord.gg/zGpmm5qJ" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+                <i class="fab fa-discord"></i> Discord
+            </a>
+            <a href="https://www.youtube.com/@LionViBS07" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                <i class="fab fa-youtube"></i> YouTube
+            </a>
+            <a href="https://www.tiktok.com/@lionvibs" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                <i class="fab fa-tiktok"></i> TikTok
+            </a>
+            <a href="https://www.instagram.com/lionvibs/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <i class="fab fa-instagram"></i> Instagram
+            </a>
+            <a href="https://streamelements.com/lionvibs/tip" target="_blank" rel="noopener noreferrer" aria-label="Donation">
+                <i class="fas fa-hand-holding-usd"></i> <span data-i18n="footer_donation_text">Donation</span>
+            </a>
+        </div>
+        <p data-i18n="footer_rights">&copy; 2025 Graou Challenge. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // --- DICTIONNAIRE DE TRADUCTIONS ---
+        const translations = {
+            fr: {
+                logo: "Graou Challenge",
+                nav_home: "Accueil",
+                nav_about: "L'événement",
+                nav_results: "Résultats",
+                nav_rules: "Règlement", 
+                nav_register: "Inscription",
+                hero_title: "Prêt à Dominer la Piste ?",
+                hero_subtitle: "Rejoignez la compétition ultime de l'année. Inscrivez votre équipe dès maintenant et montrez qui est le roi de la bille !",
+                cta_register: "Je m'inscris !",
+                about_title: "L'Événement, en bref",
+                about_subtitle: "Le Graou Challenge est l'événement communautaire qui réunit stratégie, personnalisation et vitesse. Ne manquez pas la compétition en direct tous les mercredis à 20h00 !<br><br>Voici ce qui vous attend sur la piste :",
+                feat1_title: "🏆 Compétition Élite",
+                feat1_text: "Affrontez les meilleures équipes pour la gloire et tentez de remporter la pyrogravure exclusive de la saison. Gagnez même des MM (Marbles Money) ou des TC (Tournament Coins) si vous êtes le meilleur de l'épisode ! Seuls les plus rapides et les plus stratégiques gagneront.",
+                feat2_title: "🛠️ Personnalisation Totale",
+                feat2_text: "Couleur, Layers, Modifier : customisez chaque aspect de votre bille pour un avantage unique sur le circuit.",
+                feat3_title: "🌐 Communauté Active",
+                feat3_text: "Rejoignez notre Discord pour les annonces, les discussions stratégiques et rencontrer vos futurs rivaux et alliés.",
+                footer_donation_text: "Donation",
+                footer_rights: "© 2025 Graou Challenge. Tous droits réservés."
+            },
+            en: {
+                logo: "Graou Challenge",
+                nav_home: "Home",
+                nav_about: "The Event",
+                nav_results: "Results", 
+                nav_rules: "Rules", 
+                nav_register: "Register",
+                hero_title: "Ready to Rule the Track?",
+                hero_subtitle: "Join the ultimate competition of the year. Register your team now and show who the marble king is!",
+                cta_register: "Register Now!",
+                about_title: "The Event, in brief",
+                about_subtitle: "The Graou Challenge is the community event combining strategy, customization, and speed. Don't miss the live competition every Wednesday at 2 pm ET!<br><br>Here's what awaits you on the track:",
+                feat1_title: "🏆 Elite Competition",
+                feat1_text: "Compete against the best teams for glory and try to win the exclusive seasonal pyrography prize. You can even earn MM (Marbles Money) or TC (Tournament Coins) if you are the best of the episode! Only the fastest and most strategic will win.",
+                feat2_title: "🛠️ Full Customization",
+                feat2_text: "Color, Layers, Modifier: customize every aspect of your marble for a unique advantage on the track.",
+                feat3_title: "🌐 Active Community",
+                feat3_text: "Join our Discord for announcements, strategic discussions, and meeting your future rivals and allies.",
+                footer_donation_text: "Donation",
+                footer_rights: "© 2025 Graou Challenge. All rights reserved."
+            },
+            de: {
+                logo: "Graou Challenge",
+                nav_home: "Startseite",
+                nav_about: "Das Event",
+                nav_results: "Ergebnisse", 
+                nav_rules: "Reglement", 
+                nav_register: "Anmeldung",
+                hero_title: "Bereit, die Strecke zu beherrschen?",
+                hero_subtitle: "Nehmen Sie am ultimativen Wettbewerb des Jahres teil. Melden Sie Ihr Team jetzt an und zeigen Sie, wer der Murmelkönig ist!",
+                cta_register: "Jetzt Anmelden!",
+                about_title: "Das Event, kurz gesagt",
+                about_subtitle: "Die Graou Challenge ist das Community-Event, das Strategie, Personalisierung und Geschwindigkeit vereint. Verpassen Sie nicht den Live-Wettbewerb jeden Mittwoch um 20:00 Uhr!<br><br>Hier ist, was Sie auf der Strecke erwartet:",
+                feat1_title: "🏆 Elite-Wettbewerb",
+                feat1_text: "Treten Sie gegen die besten Teams um Ruhm an und versuchen Sie, den exklusiven saisonalen Brandmalereipreis zu gewinnen. Sie können sogar MM (Marbles Money) et TC (Tournament Coins) verdienen, wenn Sie der Beste der Episode sind! Nur die schnellsten und strategischsten werden gewinnen.",
+                feat2_title: "🛠️ Volle Anpassung",
+                feat2_text: "Farbe, Ebenen, Modifikatoren: Passen Sie jeden Aspekt Ihrer Murmel für einen einzigartigen Vorteil auf der Strecke an.",
+                feat3_title: "🌐 Communauté Active",
+                feat3_text: "Treten Sie unserem Discord bei für Ankündigungen, strategische Diskussionen und um Ihre zukünftigen Rivalen und Verbündeten zu treffen.",
+                footer_donation_text: "Spenden",
+                footer_rights: "© 2025 Graou Challenge. Alle Rechte vorbehalten."
+            }
+        };
+
+        // --- FONCTION DE TRADUCTION ---
+        function changeLanguage(lang) {
+            // Parcours tous les éléments ayant l'attribut data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    let translatedText = translations[lang][key];
+
+                    // 1. CONVERSION DES **MOTS** EN GRAS <strong>MOTS</strong>
+                    // Note: Je n'ai pas vu de **gras** dans les clés de index.html, mais je laisse la fonction pour consistance
+                    translatedText = translatedText.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+
+                    // Les boutons utilisent textContent pour éviter les problèmes d'éléments imbriqués
+                    if (element.classList.contains('cta-button')) {
+                        // Supprime toutes les balises HTML pour obtenir du texte pur
+                        element.textContent = translatedText.replace(/<[^>]*>/g, '');
+                    } else {
+                        // Utilise innerHTML pour le contenu qui peut contenir des balises (comme le <br>)
+                        element.innerHTML = translatedText;
+                    }
+                }
+            });
+            // Met à jour la langue de la balise HTML
+            document.documentElement.lang = lang;
+        }
+
+        // Traduction au chargement de la page (par défaut en français)
+        document.addEventListener('DOMContentLoaded', () => {
+            const selector = document.getElementById('language-selector');
+            const initialLang = selector ? selector.value : 'fr';
+            changeLanguage(initialLang);
+        });
+    </script>
+
+</body>
+</html>
