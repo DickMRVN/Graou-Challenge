@@ -723,7 +723,7 @@
 
         function renderError(wrapper, source, error, lang, isEnCours=false) {
             if (isEnCours) {
-                wrapper.innerHTML = `<div class="info-block"><h2>${translations[lang].episode_in_progress}</h2><p>${translations[lang].episode_in_progress_detail}</p></div>`;
+                wrapper.innerHTML = `<div class="info-block"><h2>${translations[lang].episode_in_progress_title}</h2><p>${translations[lang].episode_in_progress_detail}</p></div>`;
             } else {
                 const html = `
                     <div class="info-block" style="background-color: #ffebeb; border: 1px solid red;">
@@ -836,9 +836,11 @@
                 }
                 const teamData = await teamResponse.json();
                 
-                // Message 'En cours' si pas de données
-                if (teamData.length === 0) {
-                    renderError(wrapper, "Classement Épisode", new Error("Aucune donnée de classement trouvée."), lang, true);
+                // Message 'En cours' si pas de données OU si le premier a 0 points
+                if (teamData.length === 0 || teamData[0][TEAM_POINTS_COLUMN] === 0) {
+                    // Utilisation de la nouvelle clé de traduction pour le message "En cours"
+                    wrapper.innerHTML = `<div class="info-block"><h2>${translations[lang].episode_soon_title}</h2><p>${translations[lang].episode_soon_text}</p></div>`;
+                    changeLanguage(lang);
                     return;
                 }
 
@@ -960,8 +962,9 @@
 
                 const data = await response.json();
 
-                // Message 'En cours' si pas de données
-                if (data.length === 0) {
+                // MODIFICATION : Masquer le podium et le tableau si pas de données ou si le 1er a 0 points
+                if (data.length === 0 || (data.length > 0 && data[0].total_team_points === 0)) {
+                    // Message "Aucun résultats"
                     wrapper.innerHTML = `<div class="info-block"><h2>${translations[lang].season_soon_title}</h2><p>${translations[lang].season_soon_text}</p></div>`;
                     changeLanguage(lang);
                     return;
@@ -1270,14 +1273,17 @@
                 table_players: "Joueurs", 
                 table_players_pts: "Joueurs (Pts)", // Gardé pour l'ancienne logique au cas où
                 no_player_score: "Pas de score individuel enregistré.",
-                episode_in_progress: "Épisode en cours",
+                // MODIFICATION: Changement de la clé pour l'épisode en cours
+                episode_in_progress_title: "Episode en cours",
                 episode_in_progress_detail: "Les résultats de cet épisode ne sont pas encore agrégés ou l'épisode est en cours de diffusion. Revenez après la fin de la course.",
                 teams_instruction: "Cliquez sur 'Détails' pour voir les membres permanents actifs.",
                 season_leader_title: "Podium du Classement Général", 
-                season_soon_title: "Classement Saison",
-                season_soon_text: "Le classement est en cours de compilation ou la saison n'a pas encore commencé.",
-                episode_soon_title: "Classement Épisode", 
-                episode_soon_text: "Les données d'épisode ne sont pas encore disponibles ou la saison n'a pas commencé.", 
+                // MODIFICATION: Le nouveau message pour la saison (utilisé pour 0 points ou aucune donnée)
+                season_soon_title: "Aucun résultats",
+                season_soon_text: "Les résultats ne sont pas encore agrégés ou la saison n'a pas encore commencé. Revenez à la fin de l'épisode.",
+                // MODIFICATION: Le nouveau message pour l'épisode (utilisé pour 0 points ou aucune donnée)
+                episode_soon_title: "Aucun résultats", 
+                episode_soon_text: "Les résultats ne sont pas encore agrégés ou l'épisode est en cours de diffusion. Revenez à la fin de l'épisode.", 
                 // NOUVELLES TRADUCTIONS POUR LE PODIUM
                 podium_rank_1: "1er", 
                 podium_rank_2: "2ème",
@@ -1330,14 +1336,17 @@
                 table_players: "Players",
                 table_players_pts: "Players (Pts)", // Gardé pour l'ancienne logique au cas où
                 no_player_score: "No individual score recorded.",
-                episode_in_progress: "Episode In Progress",
+                // MODIFICATION: Changement de la clé pour l'épisode en cours
+                episode_in_progress_title: "Episode In Progress",
                 episode_in_progress_detail: "The results for the selected episode are not yet aggregated or the episode is currently running. Check back after the race ends.",
                 teams_instruction: "Click 'Details' to see active permanent members.",
                 season_leader_title: "Overall Ranking Podium", 
-                season_soon_title: "Season Ranking",
-                season_soon_text: "The ranking is being compiled or the season has not started yet.",
-                episode_soon_title: "Episode Ranking", 
-                episode_soon_text: "Episode data is not yet available or the season has not started.", 
+                // MODIFICATION: Le nouveau message pour la saison (utilisé pour 0 points ou aucune donnée)
+                season_soon_title: "No Results",
+                season_soon_text: "The results are not yet aggregated or the season has not started yet. Check back after the episode ends.",
+                // MODIFICATION: Le nouveau message pour l'épisode (utilisé pour 0 points ou aucune donnée)
+                episode_soon_title: "No Results", 
+                episode_soon_text: "The results are not yet aggregated or the episode is currently running. Check back after the episode ends.", 
                 // NOUVELLES TRADUCTIONS POUR LE PODIUM
                 podium_rank_1: "1st", 
                 podium_rank_2: "2nd",
@@ -1390,14 +1399,17 @@
                 table_players: "Spieler",
                 table_players_pts: "Spieler (Pkte)", // Gardé pour l'ancienne logique au cas où
                 no_player_score: "Keine individuellen Punkte erfasst.",
-                episode_in_progress: "Episode läuft",
+                // MODIFICATION: Changement de la clé pour l'épisode en cours
+                episode_in_progress_title: "Episode läuft",
                 episode_in_progress_detail: "Die Ergebnisse der ausgewählten Episode sind noch nicht aggregiert oder die Episode läuft gerade. Schauen Sie nach dem Ende des Rennens noch einmal vorbei.",
                 teams_instruction: "Klicken Sie auf 'Details', um aktive ständige Mitglieder anzuzeigen.",
                 season_leader_title: "Gesamtwertung Podium", 
-                season_soon_title: "Saison Rangliste",
-                season_soon_text: "Das Ranking wird gerade erstellt oder die Saison hat noch nicht begonnen.",
-                episode_soon_title: "Episode Rangliste", 
-                episode_soon_text: "Episode data is not yet available or the season has not started.", 
+                // MODIFICATION: Le nouveau message pour la saison (utilisé pour 0 points ou aucune donnée)
+                season_soon_title: "Keine Ergebnisse",
+                season_soon_text: "Die Ergebnisse sind noch nicht aggregiert oder die Saison hat noch nicht begonnen. Schauen Sie nach dem Ende der Episode noch einmal vorbei.",
+                // MODIFICATION: Le nouveau message pour l'épisode (utilisé pour 0 points ou aucune donnée)
+                episode_soon_title: "Keine Ergebnisse", 
+                episode_soon_text: "Die Ergebnisse sind noch nicht aggregiert oder die Episode läuft gerade. Schauen Sie nach dem Ende der Episode noch einmal vorbei.", 
                 // NOUVELLES TRADUCTIONS POUR LE PODIUM
                 podium_rank_1: "1.", 
                 podium_rank_2: "2.",
