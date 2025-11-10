@@ -183,7 +183,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Style pour l'affichage "EN CONSTRUCTION" / Erreurs */
+        /* Style pour l'affichage "EN COURS" / Erreurs */
         .info-block {
             padding: 40px;
             background-color: var(--text-light);
@@ -237,7 +237,6 @@
             font-size: 1em;
         }
 
-
         /* =======================================================
         AJOUT NOUVEAU : STYLES DU TABLEAU DE DONNÉES 
         ======================================================= */
@@ -273,29 +272,16 @@
         
         .rafiki-points {
             color: var(--rafiki-color); 
-            font-size: 1.1em; /* Changé pour correspondre au Pts Episode */
-            font-weight: 700; /* Changé pour correspondre au Pts Episode */
+            font-size: 1.1em;
+            font-weight: 700; 
         }
 
         .team-name-cell {
-            /* Gardé le flex pour la mise en page mais plus d'image */
             display: flex;
             align-items: center;
             font-weight: 600;
         }
         
-        /* .team-logo est retiré du HTML mais le style est conservé au cas où */
-        .team-logo {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 10px;
-            background-color: #ddd; 
-            border: 2px solid #fff;
-            box-shadow: 0 0 5px rgba(0,0,0,0.1);
-        }
-
         .detail-button {
             padding: 5px 10px;
             background-color: var(--primary-color);
@@ -337,11 +323,8 @@
             border-bottom: 1px dotted #eee;
         }
         
-        .player-sp-list li:last-child {
-            border-bottom: none;
-        }
-        
-        .sp-points {
+        /* MODIFICATION: Style pour l'affichage des points dans le nouveau format */
+        .player-sp-list li .player-score {
             font-weight: 600;
             color: var(--player-sp-color);
             margin-left: 5px;
@@ -360,6 +343,184 @@
             list-style: disc;
             padding-left: 20px;
             margin-top: 5px;
+        }
+        
+        /* --- NOUVEAUX STYLES DU LEADERBOARD PODIUM (TOP 3) --- */
+        #season-podium-container {
+            margin: 80px auto 50px auto; 
+            width: 100%;
+            max-width: 1000px; /* Augmentation de la taille max du conteneur */
+            display: flex;
+            justify-content: center;
+            align-items: flex-end; 
+            min-height: 400px; 
+            position: relative;
+        }
+
+        /* Base pour le contenu de l'équipe (logo, nom, points) */
+        .podium-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            margin: 0; 
+            width: auto; 
+            /* Permet le retour à la ligne du nom d'équipe si nécessaire */
+        }
+
+        .podium-team-image {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+            background-color: #f0f0f0;
+        }
+
+        .podium-team-name {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-align: center;
+            line-height: 1.2;
+            /* Retire le white-space: nowrap pour permettre le retour à la ligne */
+            max-width: 160px; /* Limite la largeur du nom pour forcer le wrap si besoin */
+        }
+
+        .podium-points {
+            font-size: 1.0em;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .podium-rank-label {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        /* ---------------------------------------------------- */
+        /* ALIGNEMENT ET TAILLE SPECIFIQUE AU TOP 3 */
+        /* ---------------------------------------------------- */
+
+        /* 1st Place Specific Item (Positionnement au centre) */
+        .podium-item.first {
+            position: absolute;
+            z-index: 30; 
+            /* Positionnement basé sur la hauteur de la marche 1 (200px) + un petit décalage */
+            bottom: calc(200px + 15px); 
+            left: 50%;
+            transform: translateX(-50%); /* CENTRAGE HORIZONTAL PARFAIT */
+        }
+
+        /* 1. Logo du 1er plus grand */
+        .podium-item.first .podium-team-image {
+            width: 140px; /* Logo agrandi */
+            height: 140px;
+            border: 5px solid #FFD700; /* Gold */
+        }
+
+        .podium-item.first .podium-team-name {
+            font-size: 1.4em;
+            color: var(--secondary-color);
+        }
+
+        .podium-item.first .podium-points {
+            font-size: 1.2em;
+            color: #FFD700;
+        }
+        
+        /* 2nd Place Item (Positionnement aligné) */
+        .podium-item.second {
+            position: absolute;
+            z-index: 20;
+            /* Positionnement basé sur la hauteur de la marche 2 (150px) */
+            bottom: calc(150px + 15px); 
+            /* Calcul pour centrer au-dessus de la marche 2: 50% - (180px large + 25px gap) = 50% - 205px */
+            left: calc(50% - 205px); 
+            transform: translateX(-50%); /* CENTRAGE HORIZONTAL PARFAIT */
+        }
+
+        /* 3rd Place Item (Positionnement aligné) */
+        .podium-item.third {
+            position: absolute;
+            z-index: 20;
+            /* Positionnement basé sur la hauteur de la marche 3 (100px) */
+            bottom: calc(100px + 15px); 
+            /* Calcul pour centrer au-dessus de la marche 3: 50% - (180px large + 25px gap) = 50% - 205px */
+            right: calc(50% - 205px); 
+            transform: translateX(50%); /* CENTRAGE HORIZONTAL PARFAIT */
+        }
+
+
+        /* ---------------------------------------------------- */
+        /* STRUCTURE DES MARCHES (Les blocs colorés) */
+        /* ---------------------------------------------------- */
+
+        .podium-steps-structure {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 250px; 
+        }
+
+        .podium-step {
+            width: 180px; /* MARCHE PLUS LARGE */
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            border-radius: 5px 5px 0 0;
+            margin: 0 12.5px; /* Pour créer un espace total de 25px entre les marches */
+            padding: 10px 0;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            position: relative;
+            min-height: 100px;
+        }
+
+        .rank-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(0, 0, 0, 0.1); 
+            z-index: 1;
+        }
+
+        /* 2nd Place Step */
+        .podium-step.second {
+            height: 150px;
+            background-color: #c0c0c0; /* Silver */
+            order: 1; /* Left side */
+        }
+
+        /* 1st Place Step */
+        .podium-step.first-step {
+            height: 200px;
+            background-color: #FFD700; /* Gold */
+            order: 2; /* Center */
+            margin: 0 12.5px; 
+            position: relative;
+        }
+
+        /* 3rd Place Step */
+        .podium-step.third {
+            height: 100px;
+            background-color: #cd7f32; /* Bronze */
+            order: 3; /* Right side */
         }
 
         /* =======================================================
@@ -416,19 +577,15 @@
         <h1 data-i18n="results_main_title_dynamic">Tableau de bord des Résultats</h1>
         
         <div class="tab-nav">
-            <button class="tab-button" data-tab="teams" data-i18n="tab_teams" onclick="switchTab('teams')">Liste des Équipes</button>
-            <button class="tab-button active" data-tab="episode" data-i18n="tab_episode" onclick="switchTab('episode')">Leaderboard Épisode</button>
+            <button class="tab-button active" data-tab="teams" data-i18n="tab_teams" onclick="switchTab('teams')">Liste des Équipes</button>
+            <button class="tab-button" data-tab="episode" data-i18n="tab_episode" onclick="switchTab('episode')">Leaderboard Épisode</button>
             <button class="tab-button" data-tab="season" data-i18n="tab_season" onclick="switchTab('season')">Classement Saison</button>           
         </div>
 
         <div id="content-season" class="tab-content">
-            <div class="info-block">
-                <h2 data-i18n="season_soon_title">Classement Saison (En attente)</h2>
-                <p data-i18n="season_soon_text">Ce tableau affichera le classement général cumulé de la saison du Graou Challenge.</p>
             </div>
-        </div>
 
-        <div id="content-episode" class="tab-content active-content">
+        <div id="content-episode" class="tab-content">
             <div id="episode-controls">
                 <p style="font-size: 1.1em; font-weight: 600;">
                     <span data-i18n="episode_leaderboard_title_label">Résultats Épisode</span>
@@ -443,12 +600,8 @@
             </div>
         </div>
 
-        <div id="content-teams" class="tab-content">
-            <div class="info-block">
-                <h2 data-i18n="teams_soon_title">Liste des Équipes (En attente)</h2>
-                <p data-i18n="teams_soon_text">Cette section listera toutes les équipes participantes et leurs informations de base.</p>
+        <div id="content-teams" class="tab-content active-content">
             </div>
-        </div>
 
     </main>
 
@@ -485,18 +638,15 @@
         const SUPABASE_ANON_KEY = 'sb_publishable_-6UkrAaWlOQajthXJvwXlQ_xbS1f_nQ'; 
         const TEAM_TABLE = 'teams'; 
         const EPISODE_LEADERBOARD_VIEW = 'episode_leaderboard';
+        const SEASON_LEADERBOARD_VIEW = 'season_leaderboard'; 
         const PLAYER_EPISODE_LEADERBOARD_VIEW = 'player_episode_leaderboard';
         const MEMBERS_TABLE = 'team_memberships'; 
 
         const EPISODE_CONFIG_TABLE = 'episode_config';
         const TEAM_BONUS_TABLE = 'team_episode_bonus'; 
         
-        // CORRECTION: Colonne pour les points Rafiki dans la table team_episode_bonus
-        // L'erreur 400 indique que 'rafiki_points' n'est pas trouvé. 
-        // L'hypothèse la plus probable est que le nom réel est 'points_rafiki' (plus fréquent)
         const RAFIKI_POINTS_COLUMN = 'points_rafiki'; 
         
-        // ✅ COLONNES VALIDÉES PAR LE SCRIPT SQL :
         const TEAM_POINTS_COLUMN = 'total_team_points'; 
         const PLAYER_CONTRIBUTION_COLUMN = 'total_team_contribution_points';
 
@@ -505,85 +655,135 @@
         let CURRENT_SEASON = null; 
         let CURRENT_EPISODE = 1; 
         let AVAILABLE_EPISODES = []; 
+        let currentLang = 'fr'; 
 
+        // ========================================================
+        // FONCTIONS UTILITAIRES GÉNÉRALES
+        // ========================================================
+
+        /**
+         * Détermine si la couleur d'équipe est trop claire et retourne noir si c'est le cas.
+         */
+        function getReadableTextColor(hexcolor) {
+            const hex = hexcolor.startsWith('#') ? hexcolor.slice(1) : hexcolor;
+            if (hex.length !== 6) return hexcolor; 
+            
+            const r = parseInt(hex.substring(0, 2), 16);
+            const g = parseInt(hex.substring(2, 4), 16);
+            const b = parseInt(hex.substring(4, 6), 16);
+            
+            // Calcul de la luminance (seuil 200)
+            const luminance = (0.299 * r + 0.587 * g + 0.114 * b);
+            
+            if (luminance > 200) { 
+                return '#000000'; // Noir
+            } else {
+                return '#' + hex; // Couleur d'équipe
+            }
+        }
         
+        /**
+         * Récupère la langue initiale à partir de l'attribut lang du HTML.
+         */
+        function getInitialLanguage() {
+            return document.documentElement.lang || 'fr';
+        }
+        
+        /**
+         * Récupère les données de base de toutes les équipes (couleur, logo).
+         */
+        async function fetchAllTeamData() {
+            // FIX: Utilisation de logo_path au lieu de logo_url
+            const teamsUrl = `${SUPABASE_URL}/rest/v1/${TEAM_TABLE}?select=id,name,couleur,logo_path`;
+            const teamsResponse = await fetch(teamsUrl, { 
+                method: 'GET', 
+                headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' } 
+            });
+            if (!teamsResponse.ok) {
+                throw new Error(`Échec RÉCUPÉRATION COULEURS/LOGOS ÉQUIPE (${teamsResponse.status}): ${await teamsResponse.text()}`);
+            }
+            const teamsList = await teamsResponse.json();
+            
+            const teamDataMap = {};
+            teamsList.forEach(t => {
+                teamDataMap[t.name] = {
+                    couleur: t.couleur || '#333',
+                    // FIX: Utilisation de logo_path dans le map
+                    logo_path: t.logo_path || '',
+                    id: t.id
+                };
+            });
+            return teamDataMap;
+        }
+
+
         // ========================================================
         // FONCTION UTILITAIRE POUR LE DIAGNOSTIC D'ERREUR
         // ========================================================
 
-        function renderError(wrapper, source, error, lang) {
-            const html = `
-                <div class="info-block" style="background-color: #ffebeb; border: 1px solid red;">
-                    <h2 style="color: red;">${translations[lang].error_title}</h2>
-                    <p style="margin-bottom: 5px;">
-                        ${translations[lang].error_text}
-                    </p>
-                    <div class="error-details">
-                        <strong>Source de l'échec :</strong> ${source}<br>
-                        <strong>Détails :</strong> ${error.message}<br><br>
-                        
-                        <p style="font-weight: bold; color: #cc0000;">
-                            Si cette erreur persiste, vérifiez la casse de votre nom de vue/colonne (ex: total_team_points) directement dans Supabase.
+        function renderError(wrapper, source, error, lang, isEnCours=false) {
+            if (isEnCours) {
+                wrapper.innerHTML = `<div class="info-block"><h2>${translations[lang].episode_in_progress}</h2><p>${translations[lang].episode_in_progress_detail}</p></div>`;
+            } else {
+                const html = `
+                    <div class="info-block" style="background-color: #ffebeb; border: 1px solid red;">
+                        <h2 style="color: red;">${translations[lang].error_title}</h2>
+                        <p style="margin-bottom: 5px;">
+                            ${translations[lang].error_text}
                         </p>
+                        <div class="error-details">
+                            <strong>Source de l'échec :</strong> ${source}<br>
+                            <strong>Détails :</strong> ${error.message}<br><br>
+                            
+                            <p style="font-weight: bold; color: #cc0000;">
+                                Si cette erreur persiste, vérifiez la casse de votre nom de vue/colonne (ex: total_team_points) directement dans Supabase.
+                            </p>
+                        </div>
                     </div>
-                </div>
-            `;
-            wrapper.innerHTML = html;
+                `;
+                wrapper.innerHTML = html;
+            }
             changeLanguage(lang); 
         }
-
+        
         // ========================================================
         // 1. LOGIQUE DE L'ONGLET 'LEADERBOARD ÉPISODE'
         // ========================================================
         
-        /**
-         * Récupère le numéro de saison le plus élevé de la table episode_config pour déterminer la saison actuelle.
-         */
         async function fetchCurrentSeason() {
-            const wrapper = document.getElementById('episode-content-wrapper');
             const apiUrl = `${SUPABASE_URL}/rest/v1/${EPISODE_CONFIG_TABLE}?select=season&order=season.desc&limit=1`;
-
             try {
                 const response = await fetch(apiUrl, {
                     method: 'GET',
                     headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' }
                 });
-
                 if (!response.ok) {
                     throw new Error(`Échec RÉCUPÉRATION SAISON (${response.status}): ${response.statusText}`);
                 }
-                
                 const data = await response.json();
                 if (data.length > 0) {
                     return data[0].season;
                 }
                 return null;
             } catch (error) {
-                // Rendre l'erreur mais laisser le DOMContentLoaded gérer le message d'absence de saison
-                console.error("Erreur de récupération de la saison:", error);
+                console.error("Erreur lors de la récupération de la saison actuelle:", error);
                 return null;
             }
         }
-
-        /**
-         * Récupère la liste des épisodes disponibles pour la saison courante depuis Supabase.
-         */
+        
         async function fetchAvailableEpisodes() {
             const wrapper = document.getElementById('episode-content-wrapper');
-            // Requête pour les épisodes de la saison courante, triés
             const apiUrl = `${SUPABASE_URL}/rest/v1/${EPISODE_CONFIG_TABLE}?select=episode&season=eq.${CURRENT_SEASON}&order=episode.asc`;
-
             try {
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                    headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' }
+                const response = await fetch(apiUrl, { 
+                    method: 'GET', 
+                    headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' } 
                 });
 
                 if (!response.ok) {
                     const errorText = await response.text();
                     throw new Error(`Échec RÉCUPÉRATION EPISODES (${response.status}): ${errorText.substring(0, 100)}...`);
                 }
-                
                 const data = await response.json();
                 AVAILABLE_EPISODES = data.map(item => item.episode);
                 return AVAILABLE_EPISODES.length > 0;
@@ -592,51 +792,39 @@
                 return false;
             }
         }
-        
-        /**
-         * Construit le sélecteur d'épisodes et met à jour l'affichage de l'épisode courant/saison.
-         */
+
         function loadEpisodeSelector(initialEpisode) {
             const selectorContainer = document.getElementById('episode-selector-container');
-            
-            let html = `<label for="episode-select" data-i18n="select_episode_label">${translations[currentLang].select_episode_label}</label>
-                        <select id="episode-select" onchange="changeEpisode(this.value)">`;
-
+            let html = `<label for="episode-select" data-i18n="select_episode_label">${translations[currentLang].select_episode_label}</label> 
+                <select id="episode-select" onchange="changeEpisode(this.value)">`;
             AVAILABLE_EPISODES.forEach(ep => {
                 const selected = (ep == initialEpisode) ? 'selected' : '';
                 html += `<option value="${ep}" ${selected}>${translations[currentLang].episode_text} ${ep}</option>`;
             });
-
             html += '</select>';
-            
             selectorContainer.innerHTML = html;
-            
             document.getElementById('current-episode-display').textContent = initialEpisode;
             document.getElementById('current-season-display').textContent = CURRENT_SEASON;
-            
             changeLanguage(currentLang);
         }
-        
-        /**
-         * Change l'épisode sélectionné et relance le chargement du classement.
-         */
+
         function changeEpisode(episode) {
             CURRENT_EPISODE = parseInt(episode);
-            document.getElementById('current-episode-display').textContent = CURRENT_EPISODE; 
+            document.getElementById('current-episode-display').textContent = CURRENT_EPISODE;
             loadEpisodeLeaderboard(CURRENT_EPISODE, currentLang);
         }
 
-        /**
-         * Charge le classement de l'épisode (Équipe et Joueurs).
-         */
         async function loadEpisodeLeaderboard(episode, lang) {
             const wrapper = document.getElementById('episode-content-wrapper');
             wrapper.innerHTML = `<p style="padding: 50px;"><i class="fa-solid fa-spinner fa-spin-pulse fa-2x"></i> <span data-i18n="loading_data">${translations[lang].loading_data}</span></p>`;
 
             try {
-                // 1. CLASSEMENT ÉPISODE (Vue: episode_leaderboard)
-                const teamLeaderboardUrl = `${SUPABASE_URL}/rest/v1/${EPISODE_LEADERBOARD_VIEW}?select=team_id,team_name,${TEAM_POINTS_COLUMN}&season=eq.${CURRENT_SEASON}&episode=eq.${episode}&order=${TEAM_POINTS_COLUMN}.desc`;
+                // 1. Récupérer les couleurs des équipes
+                const teamDataMap = await fetchAllTeamData();
 
+                // 2. CLASSEMENT ÉPISODE (Vue: episode_leaderboard)
+                // MODIFICATION : points_from_races est toujours sélectionné mais non affiché
+                const teamLeaderboardUrl = `${SUPABASE_URL}/rest/v1/${EPISODE_LEADERBOARD_VIEW}?select=team_id,team_name,${TEAM_POINTS_COLUMN},points_from_races,points_rafiki_episode&season=eq.${CURRENT_SEASON}&episode=eq.${episode}&order=${TEAM_POINTS_COLUMN}.desc`;
                 const teamResponse = await fetch(teamLeaderboardUrl, {
                     method: 'GET',
                     headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' }
@@ -644,72 +832,18 @@
 
                 if (!teamResponse.ok) {
                     const errorText = await teamResponse.text();
-                    throw new Error(`Échec CLASSEMENT ÉPISODE (${teamResponse.status}): ${errorText.substring(0, 100)}...`);
+                    throw new Error(`Échec CLASSEMENT ÉQUIPE (${teamResponse.status}): ${errorText.substring(0, 100)}...`);
                 }
-                const teamsData = await teamResponse.json();
+                const teamData = await teamResponse.json();
                 
-                
-                // ⭐ VÉRIFICATION ROBUSTE SI L'ÉPISODE EST EN COURS
-                const totalPoints = teamsData.reduce((sum, team) => sum + (team[TEAM_POINTS_COLUMN] || 0), 0);
-
-                if (teamsData.length === 0 || totalPoints === 0) {
-                    wrapper.innerHTML = `
-                        <div class="info-block">
-                            <h2 style="color: #FF6347;" data-i18n="episode_in_progress">${translations[lang].episode_in_progress}</h2>
-                            <p data-i18n="episode_in_progress_detail">${translations[lang].episode_in_progress_detail}</p>
-                        </div>
-                    `;
-                    changeLanguage(lang);
-                    return; 
+                // Message 'En cours' si pas de données
+                if (teamData.length === 0) {
+                    renderError(wrapper, "Classement Épisode", new Error("Aucune donnée de classement trouvée."), lang, true);
+                    return;
                 }
-                
-                // 2. DÉTAILS ÉQUIPE & POINTS RAFIKI 
 
-                // 2a. Récupération des couleurs des équipes (de la table 'teams')
-                const teamDetailsUrl = `${SUPABASE_URL}/rest/v1/${TEAM_TABLE}?select=id,couleur`;
-                
-                const detailsResponse = await fetch(teamDetailsUrl, {
-                    method: 'GET',
-                    headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' }
-                });
-                
-                if (!detailsResponse.ok) {
-                    const errorText = await detailsResponse.text();
-                    throw new Error(`Échec COULEUR ÉQUIPE (${detailsResponse.status}): ${errorText.substring(0, 100)}...`);
-                }
-                const detailsData = await detailsResponse.json();
-                
-                const teamDetailsMap = detailsData.reduce((map, detail) => {
-                    map[String(detail.id)] = detail; 
-                    return map;
-                }, {});
-
-                // 2b. Récupération des points Rafiki spécifiques à l'Épisode (de la table 'team_episode_bonus')
-                // CHANGEMENT ICI: Utilisation de la nouvelle constante RAFIKI_POINTS_COLUMN
-                const episodeBonusUrl = `${SUPABASE_URL}/rest/v1/${TEAM_BONUS_TABLE}?select=team_id,${RAFIKI_POINTS_COLUMN}&season=eq.${CURRENT_SEASON}&episode=eq.${episode}`;
-
-                const bonusResponse = await fetch(episodeBonusUrl, {
-                    method: 'GET',
-                    headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' }
-                });
-                
-                if (!bonusResponse.ok) {
-                    const errorText = await bonusResponse.text();
-                    // Ajout d'une source plus précise
-                    throw new Error(`Échec BONUS ÉPISODE (${bonusResponse.status}): ${errorText.substring(0, 100)}...`);
-                }
-                const bonusData = await bonusResponse.json();
-
-                const bonusPointsMap = bonusData.reduce((map, bonus) => {
-                    // CHANGEMENT ICI: Utilisation de la nouvelle constante pour l'extraction de la donnée
-                    map[String(bonus.team_id)] = bonus[RAFIKI_POINTS_COLUMN] || 0; 
-                    return map;
-                }, {});
-                
-                
                 // 3. JOUEURS DE L'ÉPISODE (Vue: player_episode_leaderboard)
                 const playerLeaderboardUrl = `${SUPABASE_URL}/rest/v1/${PLAYER_EPISODE_LEADERBOARD_VIEW}?select=team_name,player_name,total_individual_points,${PLAYER_CONTRIBUTION_COLUMN}&season=eq.${CURRENT_SEASON}&episode=eq.${episode}&order=${PLAYER_CONTRIBUTION_COLUMN}.desc`;
-
                 const playerResponse = await fetch(playerLeaderboardUrl, {
                     method: 'GET',
                     headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' }
@@ -721,17 +855,15 @@
                 }
                 const playersData = await playerResponse.json();
 
-                
                 // 4. Regroupement des joueurs par Équipe (team_name)
                 const playersByTeam = playersData.reduce((acc, player) => {
-                    const key = player.team_name; 
+                    const key = player.team_name;
                     if (!acc[key]) {
                         acc[key] = [];
                     }
                     acc[key].push(player);
                     return acc;
                 }, {});
-
 
                 // 5. Construction du tableau HTML
                 let htmlTable = `
@@ -740,107 +872,263 @@
                             <tr>
                                 <th data-i18n="table_rank">#</th>
                                 <th data-i18n="table_team">Équipe</th>
-                                <th data-i18n="table_points_episode">${translations[lang].table_points_episode}</th>
+                                <th data-i18n="table_points">${translations[lang].table_points}</th> 
                                 <th data-i18n="table_points_rafiki">${translations[lang].table_points_rafiki}</th>
-                                <th data-i18n="table_players_pts">${translations[lang].table_players_pts}</th> </tr>
+                                <th data-i18n="table_players">${translations[lang].table_players}</th>
+                            </tr>
                         </thead>
                         <tbody>
                 `;
-                
-                teamsData.forEach((team, index) => {
-                    const teamIdString = String(team.team_id); 
-                    const teamName = team.team_name; 
+
+                teamData.forEach((team, index) => {
+                    const rank = index + 1;
+                    const teamName = team.team_name || translations[lang].unknown_team;
+                    const totalPoints = team[TEAM_POINTS_COLUMN] || 0;
+                    const rafikiPoints = team.points_rafiki_episode || 0;
+                    // const pointsFromRaces = team.points_from_races || 0; // Donnée non affichée
                     
-                    const pointsEpisode = team[TEAM_POINTS_COLUMN] || 0;
-                    
-                    // Récupération des données mises à jour
-                    const details = teamDetailsMap[teamIdString] || {};
-                    const pointsRafiki = bonusPointsMap[teamIdString] || 0; // <<< UTILISE LA NOUVELLE MAP
-                    let couleur = details.couleur || '#333';
-                    
-                    // Logic pour Pts Rafiki: afficher "+ X" si > 0, sinon vide
-                    const rafikiCellContent = (pointsRafiki > 0) ? `+ ${pointsRafiki}` : '';
-                    
-                    // 🎨 CHECK COULEUR (White -> Black) pour lisibilité
-                    if (couleur.toLowerCase() === '#ffffff' || couleur.toLowerCase() === 'white') {
-                        couleur = '#000000';
-                    }
-                    
+                    // Application de la couleur de texte pour le contraste
+                    const teamColor = teamDataMap[teamName] ? teamDataMap[teamName].couleur : '#333';
+                    const displayColor = getReadableTextColor(teamColor);
+
+                    // Logique pour l'affichage des points Rafiki
+                    const rafikiCellContent = (rafikiPoints === 0) 
+                        ? ''
+                        : ((rafikiPoints > 0 ? '+' : '') + rafikiPoints);
+
                     const teamPlayers = playersByTeam[teamName] || [];
                     
-                    let playersHtml = '<ul class="player-sp-list">';
-                    if (teamPlayers.length > 0) {
-                        
-                        teamPlayers.sort((a, b) => b[PLAYER_CONTRIBUTION_COLUMN] - a[PLAYER_CONTRIBUTION_COLUMN]);
+                    let playersHtml = `<ul class="player-sp-list">`;
+                    if (teamPlayers.length === 0) {
+                        playersHtml += `<li>${translations[lang].no_player_score}</li>`;
+                    } else {
+                        teamPlayers.sort((a, b) => (b[PLAYER_CONTRIBUTION_COLUMN] - a[PLAYER_CONTRIBUTION_COLUMN]));
 
                         teamPlayers.forEach(player => {
-                            const contributionPoints = player[PLAYER_CONTRIBUTION_COLUMN] || 0;
-                            
-                            playersHtml += `
-                                <li>
-                                    ${player.player_name} 
-                                    <span class="sp-points">${contributionPoints} Pts</span> 
-                                </li>
-                            `;
+                            // MODIFICATION: Changement du format d'affichage du joueur
+                            playersHtml += `<li>
+                                ${player.player_name || translations[lang].unknown_player} 
+                                - <span class="player-score">${player[PLAYER_CONTRIBUTION_COLUMN]} ${translations[lang].table_points_season}</span>
+                            </li>`;
                         });
-                    } else {
-                        playersHtml += `<li>${translations[lang].no_player_score}</li>`;
                     }
-                    playersHtml += '</ul>';
+                    playersHtml += `</ul>`;
 
                     htmlTable += `
                         <tr>
-                            <td>${index + 1}</td>
-                            <td class="team-name-cell">
-                                <span style="color: ${couleur};">${teamName}</span> </td>
-                            <td class="points-cell">${pointsEpisode}</td>
-                            <td class="points-cell rafiki-points">${rafikiCellContent}</td> <td>${playersHtml}</td>
+                            <td>${rank}</td>
+                            <td class="team-name-cell"><strong style="color: ${displayColor};">${teamName}</strong></td>
+                            <td class="points-cell">${totalPoints}</td>
+                            <td class="points-cell rafiki-points">${rafikiCellContent}</td>
+                            <td>${playersHtml}</td>
                         </tr>
                     `;
                 });
 
                 htmlTable += '</tbody></table>';
-
                 wrapper.innerHTML = htmlTable;
-                changeLanguage(lang); 
-
+                changeLanguage(lang);
             } catch (error) {
                 renderError(wrapper, "Classement Épisode", error, lang);
             }
         }
-        
+
         // ========================================================
-        // 2. LOGIQUE DE L'ONGLET 'LISTE DES ÉQUIPES' (Inchangé)
+        // 4. LOGIQUE DE L'ONGLET 'CLASSEMENT SAISON' (MISE À JOUR)
+        // ========================================================
+
+        async function loadSeasonLeaderboard(lang) {
+            const wrapper = document.getElementById('content-season');
+            wrapper.innerHTML = `<p style="padding: 50px;"><i class="fa-solid fa-spinner fa-spin-pulse fa-2x"></i> <span data-i18n="loading_data">${translations[lang].loading_data}</span></p>`;
+
+            try {
+                 // 1. Récupérer les couleurs et logos des équipes
+                const teamDataMap = await fetchAllTeamData();
+                
+                // 2. Requête pour le classement général
+                const seasonLeaderboardUrl = `${SUPABASE_URL}/rest/v1/${SEASON_LEADERBOARD_VIEW}?select=team_name,total_team_points&order=total_team_points.desc`;
+                
+                const response = await fetch(seasonLeaderboardUrl, {
+                    method: 'GET',
+                    headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' }
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Échec CLASSEMENT SAISON (${response.status}): ${errorText.substring(0, 100)}...`);
+                }
+
+                const data = await response.json();
+
+                // Message 'En cours' si pas de données
+                if (data.length === 0) {
+                    wrapper.innerHTML = `<div class="info-block"><h2>${translations[lang].season_soon_title}</h2><p>${translations[lang].season_soon_text}</p></div>`;
+                    changeLanguage(lang);
+                    return;
+                }
+
+                // --- GESTION DU PODIUM (TOP 3) ---
+                
+                const podiumData = [
+                    { rank: 1, team: data[0] || null, cssClass: 'first', stepCssClass: 'first-step', rankTextKey: 'podium_rank_1' },
+                    { rank: 2, team: data[1] || null, cssClass: 'second', stepCssClass: 'second', rankTextKey: 'podium_rank_2' },
+                    { rank: 3, team: data[2] || null, cssClass: 'third', stepCssClass: 'third', rankTextKey: 'podium_rank_3' },
+                ];
+                
+                const defaultLogo = (text) => `https://placehold.co/120x120/4CAF50/ffffff?text=${text}`;
+
+                const getPodiumItemHtml = (podiumSpot) => {
+                    const team = podiumSpot.team;
+                    if (!team) return ''; // No team for this spot
+                    
+                    const teamName = team.team_name || translations[lang].unknown_team;
+                    const teamPoints = team.total_team_points || 0;
+                    const rankText = translations[lang][podiumSpot.rankTextKey]; // Texte traduit (1er, 2ème, 3ème)
+                    
+                    const teamData = teamDataMap[teamName] || {};
+                    const teamColor = teamData.couleur || '#333'; 
+                    const displayColor = getReadableTextColor(teamColor);
+                    
+                    const logoPath = teamData.logo_path; 
+                    const isDefaultLogo = !logoPath || logoPath.trim() === '';
+                    
+                    const imageUrl = isDefaultLogo 
+                        ? defaultLogo(podiumSpot.rankTextKey)
+                        : `${SUPABASE_URL}/storage/v1/object/public/logos/${logoPath}`; 
+                    
+                    return `
+                        <div class="podium-item ${podiumSpot.cssClass}">
+                            <span class="podium-rank-label" style="color: ${displayColor};">${rankText}</span>
+                            <img src="${imageUrl}" alt="${teamName}" class="podium-team-image">
+                            <p class="podium-team-name" style="color: ${displayColor};">${teamName}</p>
+                            <p class="podium-points">${teamPoints} ${translations[lang].table_points_season}</p>
+                        </div>
+                    `;
+                };
+
+                const getPodiumStepHtml = (podiumSpot) => {
+                    if (!podiumSpot.team) return ''; // No step if no team
+                    
+                    return `
+                        <div class="podium-step ${podiumSpot.stepCssClass}">
+                            <span class="rank-number">${podiumSpot.rank}</span>
+                        </div>
+                    `;
+                };
+
+                const podiumItemsHtml = podiumData.map(getPodiumItemHtml).join('');
+                const podiumStepsHtml = podiumData.map(getPodiumStepHtml).join('');
+
+                const podiumHtml = `
+                    <h2 class="leader-title" style="font-size: 1.5em; margin-bottom: 20px;" data-i18n="season_leader_title">${translations[lang].season_leader_title}</h2>
+                    <div id="season-podium-container">
+                        <div id="podium-items-wrapper">
+                            ${podiumItemsHtml}
+                        </div>
+                        <div class="podium-steps-structure">
+                            ${podiumStepsHtml}
+                        </div>
+                    </div>
+                `;
+                
+                // --- GESTION DU TABLEAU (À PARTIR DU RANG 4) ---
+                const tableData = data.slice(3); 
+
+                let htmlTable = '';
+                if (tableData.length > 0 || data.length <= 3) {
+                     htmlTable = `
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-i18n="table_rank">#</th>
+                                    <th data-i18n="table_team">Équipe</th>
+                                    <th data-i18n="table_points_season">${translations[lang].table_points_season}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+                    
+                    const teamsForTable = (data.length <= 3) ? data : tableData;
+                    
+                    teamsForTable.forEach((team, index) => {
+                        const rank = (data.length <= 3) ? index + 1 : index + 4; 
+                        
+                        const teamName = team.team_name || translations[lang].unknown_team; 
+                        const totalTeamPoints = team.total_team_points || 0;
+                        
+                        const teamColor = teamDataMap[teamName] ? teamDataMap[teamName].couleur : '#333';
+                        const displayColor = getReadableTextColor(teamColor);
+
+                        htmlTable += `
+                            <tr>
+                                <td>${rank}</td>
+                                <td><strong style="color: ${displayColor};">${teamName}</strong></td>
+                                <td class="points-cell">${totalTeamPoints}</td>
+                            </tr>
+                        `;
+                    });
+
+                    htmlTable += '</tbody></table>';
+                }
+
+                // Injection du Podium PUIS du tableau
+                wrapper.innerHTML = podiumHtml + htmlTable;
+                changeLanguage(lang); 
+            } catch (error) {
+                renderError(wrapper, "Classement Saison", error, lang);
+            }
+        }
+
+
+        // ========================================================
+        // 2. LOGIQUE DE L'ONGLET 'LISTE DES ÉQUIPES'
         // ========================================================
         
         let teamsDataLoaded = false;
         async function loadTeamsData(lang) {
             const teamsContent = document.getElementById('content-teams');
             
-            if (teamsDataLoaded) {
-                changeLanguage(lang); 
-                return; 
+            if (teamsDataLoaded && currentLang === lang) {
+                changeLanguage(lang);
+                return;
             }
-
+            
             teamsContent.innerHTML = `<p style="padding: 50px;"><i class="fa-solid fa-spinner fa-spin-pulse fa-2x"></i> <span data-i18n="loading_data">${translations[lang].loading_data}</span></p>`;
-
-            const apiUrl = `${SUPABASE_URL}/rest/v1/${TEAM_TABLE}?select=id,name,couleur,season_total_points&order=season_total_points.desc,name.asc&name=neq.Guest%201&name=neq.Guest%202`; 
-
+            
             try {
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                    headers: {
-                        'apikey': SUPABASE_ANON_KEY,
-                        'Content-Type': 'application/json'
-                    }  
+                // 1. Récupérer toutes les équipes avec couleur/logo (utilise la fonction corrigée)
+                const teamDataMap = await fetchAllTeamData();
+                const teamsList = Object.values(teamDataMap).map(data => ({
+                    id: data.id,
+                    name: Object.keys(teamDataMap).find(key => teamDataMap[key].id === data.id), // Récupérer le nom
+                    couleur: data.couleur
+                }));
+
+                // 2. Récupérer les points du classement saisonnier
+                const leaderboardUrl = `${SUPABASE_URL}/rest/v1/${SEASON_LEADERBOARD_VIEW}?select=team_id,total_team_points&order=total_team_points.desc`;
+                const leaderboardResponse = await fetch(leaderboardUrl, { 
+                    method: 'GET', 
+                    headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' } 
                 });
 
-                if (!response.ok) {
-                    throw new Error(`Erreur Supabase: ${response.status} ${response.statusText}`);
+                if (!leaderboardResponse.ok) {
+                    throw new Error(`Erreur Supabase (Leaderboard): ${leaderboardResponse.status} ${leaderboardResponse.statusText}`);
                 }
+                const leaderboardData = await leaderboardResponse.json();
+
+                // 3. Fusionner les données
+                const pointsMap = leaderboardData.reduce((acc, item) => {
+                    acc[item.team_id] = item.total_team_points || 0;
+                    return acc;
+                }, {});
                 
-                const data = await response.json();
-                
+                // Ajouter les points et trier (nécessaire pour le classement #)
+                let finalRankedList = teamsList.map(team => ({
+                    ...team,
+                    total_team_points: pointsMap[team.id] || 0
+                })).sort((a, b) => b.total_team_points - a.total_team_points);
+
+
                 let htmlTable = `
                     <p style="text-align: left; margin-bottom: 10px;" data-i18n="teams_instruction">${translations[lang].teams_instruction}</p>
                     <table>
@@ -853,102 +1141,101 @@
                         </thead>
                         <tbody>
                 `;
-                
-                data.forEach((team, index) => {
-                    const teamId = team.id;
-                    const teamName = team.name ? team.name.replace(/'/g, "\\'") : 'Nom Inconnu'; 
+
+                finalRankedList.forEach((team, index) => {
+                    const teamId = team.id; 
+                    const teamName = team.name ? team.name.replace(/'/g, "\\'") : 'Nom Inconnu';
+                    // const totalPoints = team.total_team_points || 0; // Donnée non affichée
                     
-                    let couleur = team.couleur || '#333';
-                    if (couleur.toLowerCase() === '#ffffff' || couleur.toLowerCase() === 'white') {
-                        couleur = '#000000';
-                    }
+                    const teamColor = team.couleur || '#333'; 
+                    const displayColor = getReadableTextColor(teamColor); 
                     
                     htmlTable += `
                         <tr id="team-row-${teamId}">
                             <td>${index + 1}</td>
-                            <td><strong style="color: ${couleur};">${team.name || 'Nom Inconnu'}</strong></td> <td>
+                            <td><strong style="color: ${displayColor};">${team.name || 'Nom Inconnu'}</strong></td>
+                            <td>
                                 <button class="detail-button" onclick="showTeamDetails('${teamId}', '${teamName}', '${lang}', this)" data-i18n="button_details">${translations[lang].button_details}</button>
-                                <div id="members-list-${teamId}" class="team-members-list" style="display: none;"></div>
-                            </td> 
+                                <div id="members-${teamId}" class="team-members-list" style="display: none;"></div>
+                            </td>
                         </tr>
                     `;
                 });
-
+                
                 htmlTable += '</tbody></table>';
-
                 teamsContent.innerHTML = htmlTable;
-                teamsDataLoaded = true; 
-                changeLanguage(currentLang); 
-            
+                teamsDataLoaded = true;
+                changeLanguage(lang);
+
             } catch (error) {
-                console.error("Erreur lors de la récupération des équipes:", error);
-                teamsContent.innerHTML = renderError(teamsContent, "Liste des Équipes", error, lang);
-                teamsDataLoaded = false;
-                changeLanguage(currentLang); 
+                renderError(teamsContent, "Liste des Équipes", error, lang);
             }
         }
-        
-        async function showTeamDetails(teamId, teamName, lang, buttonElement) {
-            const membersListDiv = document.getElementById(`members-list-${teamId}`);
+
+        async function showTeamDetails(teamId, teamName, lang, button) {
+            const membersListDiv = document.getElementById(`members-${teamId}`);
             
-            if (membersListDiv.style.display !== 'none') {
+            if (membersListDiv.style.display === 'block') {
                 membersListDiv.style.display = 'none';
-                buttonElement.textContent = translations[lang].button_details;
+                button.textContent = translations[lang].button_details;
                 return;
             }
-            
-            document.querySelectorAll('.team-members-list').forEach(list => list.style.display = 'none');
-            document.querySelectorAll('.detail-button').forEach(btn => btn.textContent = translations[lang].button_details);
 
-            membersListDiv.innerHTML = `<i class="fa-solid fa-spinner fa-spin-pulse"></i> ${translations[lang].loading_members}`;
             membersListDiv.style.display = 'block';
-            buttonElement.textContent = translations[lang].button_hide; 
+            button.textContent = translations[lang].button_hide;
+            
+            if (membersListDiv.innerHTML.trim() !== '') {
+                changeLanguage(lang); 
+                return;
+            }
 
-            const apiUrl = `${SUPABASE_URL}/rest/v1/${MEMBERS_TABLE}?select=players(name)&team_id=eq.${teamId}&is_temp=eq.false&players.name=neq.Guest%201&players.name=neq.Guest%202`; 
+            membersListDiv.innerHTML = `<p style="text-align: center; margin-top: 10px;"><i class="fa-solid fa-spinner fa-spin-pulse"></i> ${translations[lang].loading_members}</p>`;
+
+            const apiUrl = `${SUPABASE_URL}/rest/v1/${MEMBERS_TABLE}?select=player_id,players(name),is_referent&team_id=eq.${teamId}&is_active=eq.true&is_temp=eq.false&order=is_referent.desc`;
 
             try {
                 const response = await fetch(apiUrl, {
                     method: 'GET',
-                    headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' }  
+                    headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' }
                 });
 
                 if (!response.ok) {
                     throw new Error(`Erreur Supabase: ${response.status} ${response.statusText}`);
                 }
-                
+
                 const data = await response.json();
                 
-                if (data.length > 0) {
-                    let membersHtml = `<p><strong>${translations[lang].members_title} ${teamName.replace(/\\'/g, "'")} :</strong></p><ul>`; 
-                    
-                    data.forEach(item => {
-                        const playerName = item.players ? item.players.name : translations[lang].unknown_player;
-                        membersHtml += `<li>${playerName}</li>`;
-                    });
-                    
-                    membersHtml += '</ul>';
-                    membersListDiv.innerHTML = membersHtml;
+                let membersHtml = `<strong>${translations[lang].members_title} ${teamName.replace(/\\'/g, "'")} :</strong> <ul>`;
+
+                if (data.length === 0) {
+                    membersHtml = `<p>${translations[lang].no_members_found}</p>`;
                 } else {
-                    membersListDiv.innerHTML = `<p>${translations[lang].no_members_found}</p>`;
+                    data.forEach(member => {
+                        const playerName = member.players?.name || translations[lang].unknown_player;
+                        const role = member.is_referent ? ` (${translations[lang].captain_text})` : '';
+                        membersHtml += `<li>${playerName}${role}</li>`;
+                    });
+                    membersHtml += '</ul>';
                 }
-            
+                
+                membersListDiv.innerHTML = membersHtml;
             } catch (error) {
                 console.error(`Erreur lors de la récupération des membres pour l'équipe ${teamId}:`, error);
                 membersListDiv.innerHTML = `<p style="color: red;">${translations[lang].members_error}: ${error.message}</p>`;
             }
         }
-        
+
         // ========================================================
         // 3. LOGIQUE DE TRADUCTION ET DE NAVIGATION
         // ========================================================
-
+        
         const translations = {
             fr: {
                 results_page_title: "Graou Challenge | Résultats",
                 logo: "Graou Challenge",
                 nav_home: "Accueil",
                 nav_about: "L'événement",
-                nav_results: "Résultats", 
+                nav_results: "Résultats",
                 nav_rules: "Règlement",
                 nav_register: "Inscription",
                 results_main_title_dynamic: "Tableau de bord des Résultats",
@@ -960,35 +1247,41 @@
                 error_title: "Erreur de chargement",
                 error_text: "Impossible de récupérer les données depuis Supabase.",
                 unknown_player: "Joueur Inconnu",
-                no_members_found: "Aucun membre trouvé pour cette équipe.",
+                unknown_team: "Équipe Inconnue",
+                no_members_found: "Aucun membre permanent trouvé pour cette équipe.",
                 members_title: "Membres de l'équipe",
                 members_error: "Erreur lors de la récupération des membres",
                 button_details: "Détails",
                 button_hide: "Masquer",
                 select_episode_label: "Sélectionnez l'Épisode :",
-                
                 episode_leaderboard_title_label: "Résultats Épisode",
                 season_text: "Saison",
                 episode_text: "Épisode",
+                captain_text: "Capitaine",
                 table_rank: "#",
                 table_team: "Équipe",
                 table_members: "Membres",
-                table_points_episode: "Pts Épisode",
+                // MODIFICATION: Renommage Pts Épisode en Points
+                table_points: "Points", 
                 table_points_rafiki: "Pts Rafiki",
-                table_players_pts: "Joueurs (Pts)",
+                table_points_races: "Pts Courses", 
+                table_points_season: "Points", 
+                // MODIFICATION: Renommage Joueurs (Pts) en Joueurs
+                table_players: "Joueurs", 
+                table_players_pts: "Joueurs (Pts)", // Gardé pour l'ancienne logique au cas où
                 no_player_score: "Pas de score individuel enregistré.",
-                
-                episode_in_progress: "Épisode en cours", 
+                episode_in_progress: "Épisode en cours",
                 episode_in_progress_detail: "Les résultats de cet épisode ne sont pas encore agrégés ou l'épisode est en cours de diffusion. Revenez après la fin de la course.",
-                
-                teams_instruction: "Cliquez sur 'Détails' pour voir les membres.",
-                teams_soon_title: "Liste des Équipes (En attente)",
-                teams_soon_text: "Cette section listera toutes les équipes participantes et leurs informations de base.",
-                episode_soon_title: "Résultats de l'Épisode",
-                episode_soon_text: "Aucun épisode trouvé pour cette Saison. Vérifiez la table episode_config.",
-                season_soon_title: "Classement Saison (En attente)",
-                season_soon_text: "Ce tableau affichera le classement général cumulé de la saison du Graou Challenge.",
-
+                teams_instruction: "Cliquez sur 'Détails' pour voir les membres permanents actifs.",
+                season_leader_title: "Podium du Classement Général", 
+                season_soon_title: "Classement Saison",
+                season_soon_text: "Le classement est en cours de compilation ou la saison n'a pas encore commencé.",
+                episode_soon_title: "Classement Épisode", 
+                episode_soon_text: "Les données d'épisode ne sont pas encore disponibles ou la saison n'a pas commencé.", 
+                // NOUVELLES TRADUCTIONS POUR LE PODIUM
+                podium_rank_1: "1er", 
+                podium_rank_2: "2ème",
+                podium_rank_3: "3ème",
                 footer_twitch_text: "Twitch",
                 footer_discord_text: "Discord",
                 footer_youtube_text: "YouTube",
@@ -1014,35 +1307,41 @@
                 error_title: "Loading Error",
                 error_text: "Could not retrieve data from Supabase.",
                 unknown_player: "Unknown Player",
-                no_members_found: "No members found for this team.",
+                unknown_team: "Unknown Team",
+                no_members_found: "No permanent active members found for this team.",
                 members_title: "Team Members for",
                 members_error: "Error retrieving members",
                 button_details: "Details",
                 button_hide: "Hide",
                 select_episode_label: "Select Episode:",
-
                 episode_leaderboard_title_label: "Episode Results",
                 season_text: "Season",
                 episode_text: "Episode",
+                captain_text: "Captain",
                 table_rank: "#",
                 table_team: "Team",
                 table_members: "Members",
-                table_points_episode: "Ep. Pts",
+                // MODIFICATION: Renommage Pts Épisode en Points
+                table_points: "Points",
                 table_points_rafiki: "Rafiki Pts",
-                table_players_pts: "Players (Pts)",
+                table_points_races: "Race Pts",
+                table_points_season: "Points",
+                // MODIFICATION: Renommage Joueurs (Pts) en Joueurs
+                table_players: "Players",
+                table_players_pts: "Players (Pts)", // Gardé pour l'ancienne logique au cas où
                 no_player_score: "No individual score recorded.",
-                
                 episode_in_progress: "Episode In Progress",
                 episode_in_progress_detail: "The results for the selected episode are not yet aggregated or the episode is currently running. Check back after the race ends.",
-
-                teams_instruction: "Click 'Details' to see members.",
-                teams_soon_title: "Team List (Pending)",
-                teams_soon_text: "This table will list all participating teams and their basic info.",
-                episode_soon_title: "Episode Results",
-                episode_soon_text: "No episodes found for this season. Check the episode_config table.",
-                season_soon_title: "Season Ranking (Pending)",
-                season_soon_text: "This table will display the cumulative general ranking for the Graou Challenge season.",
-
+                teams_instruction: "Click 'Details' to see active permanent members.",
+                season_leader_title: "Overall Ranking Podium", 
+                season_soon_title: "Season Ranking",
+                season_soon_text: "The ranking is being compiled or the season has not started yet.",
+                episode_soon_title: "Episode Ranking", 
+                episode_soon_text: "Episode data is not yet available or the season has not started.", 
+                // NOUVELLES TRADUCTIONS POUR LE PODIUM
+                podium_rank_1: "1st", 
+                podium_rank_2: "2nd",
+                podium_rank_3: "3rd",
                 footer_twitch_text: "Twitch",
                 footer_discord_text: "Discord",
                 footer_youtube_text: "YouTube",
@@ -1068,35 +1367,41 @@
                 error_title: "Fehler beim Laden",
                 error_text: "Daten konnten nicht von Supabase abgerufen werden.",
                 unknown_player: "Unbekannter Spieler",
-                no_members_found: "Keine Mitglieder für dieses Team gefunden.",
+                unknown_team: "Unbekanntes Team",
+                no_members_found: "Keine aktiven ständigen Mitglieder für dieses Team gefunden.",
                 members_title: "Teammitglieder für",
                 members_error: "Fehler beim Abrufen der Mitglieder",
                 button_details: "Details",
                 button_hide: "Verbergen",
                 select_episode_label: "Wählen Sie die Episode:",
-
                 episode_leaderboard_title_label: "Episode Ergebnisse",
                 season_text: "Saison",
                 episode_text: "Episode",
+                captain_text: "Kapitän",
                 table_rank: "#",
                 table_team: "Team",
                 table_members: "Mitglieder",
-                table_points_episode: "Ep. Pkte",
+                // MODIFICATION: Renommage Pts Épisode en Points
+                table_points: "Punkte",
                 table_points_rafiki: "Rafiki Pkte",
-                table_players_pts: "Spieler (Pkte)",
-                no_player_score: "Keine Einzelpunktzahl aufgezeichnet.",
-                
-                episode_in_progress: "Episode Läuft",
-                episode_in_progress_detail: "Die Ergebnisse für die ausgewählte Episode sind noch nicht aggregiert oder die Episode läuft derzeit. Schauen Sie nach dem Rennen noch einmal vorbei.",
-
-                teams_instruction: "Klicken Sie auf 'Details', um die Mitglieder anzuzeigen.",
-                teams_soon_title: "Teamliste (Ausstehend)",
-                teams_soon_text: "Diese Tabelle listet alle teilnehmenden Teams und ihre grundlegenden Informationen auf.",
-                episode_soon_title: "Episode Ergebnisse",
-                episode_soon_text: "Keine Episoden für diese Saison gefunden. Überprüfen Sie die Tabelle 'episode_config'.",
-                season_soon_title: "Saison Rangliste (Ausstehend)",
-                season_soon_text: "Diese Tabelle zeigt die kumulierte Gesamtrangliste für die Graou Challenge Saison.",
-
+                table_points_races: "Rennen Pkte",
+                table_points_season: "Punkte",
+                // MODIFICATION: Renommage Joueurs (Pts) en Joueurs
+                table_players: "Spieler",
+                table_players_pts: "Spieler (Pkte)", // Gardé pour l'ancienne logique au cas où
+                no_player_score: "Keine individuellen Punkte erfasst.",
+                episode_in_progress: "Episode läuft",
+                episode_in_progress_detail: "Die Ergebnisse der ausgewählten Episode sind noch nicht aggregiert oder die Episode läuft gerade. Schauen Sie nach dem Ende des Rennens noch einmal vorbei.",
+                teams_instruction: "Klicken Sie auf 'Details', um aktive ständige Mitglieder anzuzeigen.",
+                season_leader_title: "Gesamtwertung Podium", 
+                season_soon_title: "Saison Rangliste",
+                season_soon_text: "Das Ranking wird gerade erstellt oder die Saison hat noch nicht begonnen.",
+                episode_soon_title: "Episode Rangliste", 
+                episode_soon_text: "Episode data is not yet available or the season has not started.", 
+                // NOUVELLES TRADUCTIONS POUR LE PODIUM
+                podium_rank_1: "1.", 
+                podium_rank_2: "2.",
+                podium_rank_3: "3.",
                 footer_twitch_text: "Twitch",
                 footer_discord_text: "Discord",
                 footer_youtube_text: "YouTube",
@@ -1107,32 +1412,46 @@
             }
         };
 
-        let currentLang = 'fr'; 
-        
         function changeLanguage(lang) {
             currentLang = lang;
+            document.documentElement.lang = lang; 
+
+            // 1. Mettre à jour les attributs data-i18n
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
-                if (translations[lang] && translations[lang][key]) {
-                    element.textContent = translations[lang][key];
+                // MODIFICATION: Mettre à jour les clés de traduction pour l'onglet Épisode
+                const newKey = {
+                    'table_points_episode': 'table_points',
+                    'table_players_pts': 'table_players'
+                }[key] || key;
+                
+                if (translations[lang] && translations[lang][newKey]) {
+                    if (element.tagName === 'TITLE' || element.tagName === 'H1') {
+                        element.textContent = translations[lang][newKey];
+                    } else if (element.tagName === 'INPUT' && element.type === 'submit') {
+                        element.value = translations[lang][newKey];
+                    } else {
+                        element.textContent = translations[lang][newKey];
+                    }
                 }
             });
-
-            document.title = translations[lang].results_page_title;
             
+            // 2. Mettre à jour l'affichage dynamique (saison/épisode)
             const episodeDisplay = document.getElementById('current-episode-display');
             if (episodeDisplay) {
                 episodeDisplay.textContent = CURRENT_EPISODE || '...';
             }
-            
             const seasonDisplay = document.getElementById('current-season-display');
             if (seasonDisplay) {
                 seasonDisplay.textContent = CURRENT_SEASON || '...';
             }
-            
+
+            // 3. Mettre à jour le sélecteur d'épisodes et les boutons
             const episodeSelect = document.getElementById('episode-select');
             if (episodeSelect) {
-                // Met à jour les options de la liste déroulante
+                const label = document.querySelector('label[for="episode-select"]');
+                if(label) label.textContent = translations[lang].select_episode_label;
+                
                 AVAILABLE_EPISODES.forEach(ep => {
                     const option = episodeSelect.querySelector(`option[value="${ep}"]`);
                     if (option) {
@@ -1140,78 +1459,98 @@
                     }
                 });
             }
-            
-            // Mise à jour des boutons détails/masquer
+
+            // 4. Mise à jour des boutons détails/masquer
             document.querySelectorAll('.detail-button').forEach(button => {
-                const isHidden = button.nextElementSibling && button.nextElementSibling.style.display !== 'none';
-                button.textContent = isHidden ? translations[lang].button_hide : translations[lang].button_details;
+                const membersDiv = button.nextElementSibling;
+                const isHidden = !membersDiv || membersDiv.style.display === 'none' || membersDiv.style.display === '';
+                button.textContent = isHidden ? translations[lang].button_details : translations[lang].button_hide;
             });
         }
 
         function switchTab(tabId) {
+            // 1. Gérer les classes d'onglets (buttons et content)
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active-content');
             });
             document.querySelectorAll('.tab-button').forEach(button => {
                 button.classList.remove('active');
             });
-
+            
             document.getElementById(`content-${tabId}`).classList.add('active-content');
             document.querySelector(`.tab-button[data-tab="${tabId}"]`).classList.add('active');
 
-             if (tabId === 'teams') {
-                loadTeamsData(currentLang);
-            } else if (tabId === 'episode') {
-                if (CURRENT_SEASON) {
-                    loadEpisodeSelector(CURRENT_EPISODE);
-                    loadEpisodeLeaderboard(CURRENT_EPISODE, currentLang);
+            // 2. Déclencher le chargement des données si nécessaire
+            const lang = currentLang || 'fr';
+            const contentDiv = document.getElementById(`content-${tabId}`);
+            
+            // Check si le contenu a déjà été généré (table ou message d'info)
+            const hasContent = contentDiv.querySelector('table') || contentDiv.querySelector('.info-block') || contentDiv.querySelector('#season-podium-container');
+
+            if (tabId === 'teams') {
+                loadTeamsData(lang); 
+            } else if (tabId === 'season') {
+                // Charger la saison uniquement si l'onglet est vide (première sélection)
+                if (!hasContent) {
+                    loadSeasonLeaderboard(lang);
                 } else {
-                     const wrapper = document.getElementById('episode-content-wrapper');
-                     wrapper.innerHTML = `<div class="info-block"><h2>${translations[currentLang].episode_soon_title}</h2><p>${translations[currentLang].episode_soon_text}</p></div>`;
+                    // Si le contenu existe, on le met juste à jour pour la traduction
+                    changeLanguage(lang);
+                }
+            } else if (tabId === 'episode') {
+                const episodeWrapper = document.getElementById('episode-content-wrapper');
+                // On vérifie le contenu de l'épisode wrapper
+                const hasEpisodeContent = episodeWrapper.querySelector('table') || episodeWrapper.querySelector('.info-block');
+                
+                // Si pas de contenu, mais qu'on a les infos d'épisode, on force le chargement.
+                // Normalement pré-chargé dans DOMContentLoaded, cette logique est un filet de sécurité.
+                if (!hasEpisodeContent && CURRENT_SEASON && AVAILABLE_EPISODES.length > 0) {
+                    loadEpisodeLeaderboard(CURRENT_EPISODE, lang);
+                } else {
+                     // Si le contenu existe, on le met juste à jour pour la traduction
+                    changeLanguage(lang);
                 }
             }
             
-            changeLanguage(currentLang);
+            changeLanguage(lang);
         }
 
-        document.addEventListener('DOMContentLoaded', async () => { 
-            const browserLang = navigator.language.split('-')[0];
-            const initialLang = translations[browserLang] ? browserLang : 'fr';
-            
-            document.getElementById('language-selector').value = initialLang;
-            changeLanguage(initialLang);
+        // ========================================================
+        // 5. CHARGEMENT INITIAL 
+        // ========================================================
+        
+        document.addEventListener('DOMContentLoaded', async () => {
+            const initialLang = getInitialLanguage();
+            currentLang = initialLang;
 
-            // 1. RÉCUPÉRATION DYNAMIQUE DE LA SAISON
-            const season = await fetchCurrentSeason();
-            CURRENT_SEASON = season;
-
-            const seasonDisplay = document.getElementById('current-season-display');
-            if (seasonDisplay) {
-                seasonDisplay.textContent = CURRENT_SEASON || '...';
-            }
-            
+            // 1. Pré-chargement des données de saison/épisode (pour l'onglet Episode)
+            CURRENT_SEASON = await fetchCurrentSeason(); 
             if (CURRENT_SEASON) {
-                // 2. Récupération dynamique des épisodes disponibles pour cette saison
                 const success = await fetchAvailableEpisodes(); 
-                
                 if (success) {
-                    // 3. Définition de l'épisode initial : le plus grand numéro
                     CURRENT_EPISODE = AVAILABLE_EPISODES[AVAILABLE_EPISODES.length - 1]; 
-                    
-                    // 4. Chargement du Leaderboard
                     loadEpisodeSelector(CURRENT_EPISODE);
-                    loadEpisodeLeaderboard(CURRENT_EPISODE, initialLang); 
+                    
+                    // Chargement du leaderboard de l'épisode par défaut (le dernier)
+                    loadEpisodeLeaderboard(CURRENT_EPISODE, initialLang);
                 } else {
                     // Afficher un message si aucune donnée d'épisode n'est trouvée pour la saison
                     const wrapper = document.getElementById('episode-content-wrapper');
                     wrapper.innerHTML = `<div class="info-block"><h2>${translations[initialLang].episode_soon_title}</h2><p>${translations[initialLang].episode_soon_text}</p></div>`;
-                    changeLanguage(initialLang); 
                 }
             } else {
-                // Afficher un message si aucune saison n'a pu être trouvée
+                 // Afficher un message si aucune saison n'a pu être trouvée
                  const wrapper = document.getElementById('episode-content-wrapper');
                  wrapper.innerHTML = `<div class="info-block"><h2>${translations[initialLang].episode_soon_title}</h2><p>${translations[initialLang].episode_soon_text}</p></div>`;
             }
+            
+            // 2. Charger et afficher la Liste des Équipes (COMPORTEMENT PAR DÉFAUT)
+            await loadTeamsData(initialLang);
+            
+            // 3. S'assurer que les classes active sont bien positionnées sur 'teams'
+            switchTab('teams'); 
+            
+            changeLanguage(initialLang);
         });
     </script>
 </body>
